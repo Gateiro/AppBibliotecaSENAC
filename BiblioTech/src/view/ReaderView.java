@@ -5,6 +5,7 @@
 package view;
 
 import controller.ReaderController;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
 public class ReaderView extends javax.swing.JFrame {
 
     private DefaultTableModel modelo;
+
     private ReaderController createReader = new ReaderController();
 
-    /**
-     * Creates new form BookView
-     */
+    Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
+
     public ReaderView() {
         initComponents();
         modelo = new DefaultTableModel();
@@ -30,6 +31,7 @@ public class ReaderView extends javax.swing.JFrame {
         modelo.addColumn("Email");
         // Inicializa a jTable1 com o modelo vazio
         tblListReaders.setModel(modelo);
+
     }
 
     private void OrgnizeTable() {
@@ -37,8 +39,7 @@ public class ReaderView extends javax.swing.JFrame {
         modelo.setRowCount(0);
 
         // Obtém os dados atualizados do controller
-        Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
-
+        //Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
         // Preenche o modelo com os dados do bookMap
         for (Map.Entry<Integer, Map<String, String>> entry : bookReaders.entrySet()) {
             int id = entry.getKey();
@@ -66,6 +67,7 @@ public class ReaderView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         tabbedListReaders = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -109,6 +111,13 @@ public class ReaderView extends javax.swing.JFrame {
 
         jButton3.setText("Consultas");
 
+        jButton10.setText("jButton10");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -124,6 +133,10 @@ public class ReaderView extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(42, 42, 42))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton10)
+                .addGap(76, 76, 76))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,6 +149,8 @@ public class ReaderView extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
+                .addGap(167, 167, 167)
+                .addComponent(jButton10)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -408,16 +423,11 @@ public class ReaderView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-        // Limpa o modelo atual da tabela
+
         String search = inputSearchReaders.getText();
         modelo.setRowCount(0);
 
-        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
-        Map<Integer, Map<String, String>> bookReader = createReader.listReaders();
-
-        // Preenche o modelo com os dados do bookMap filtrando pelo texto de pesquisa
-        for (Map.Entry<Integer, Map<String, String>> entry : bookReader.entrySet()) {
+        for (Map.Entry<Integer, Map<String, String>> entry : bookReaders.entrySet()) {
             int id = entry.getKey();
             Map<String, String> details = entry.getValue();
 
@@ -438,7 +448,7 @@ public class ReaderView extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         int readerId = Integer.parseInt(inputCpf.getText());
-        
+
         String readerCpf = inputCpf.getText();
         String readerName = inputName.getText();
         String readerTel = inputTel.getText();
@@ -450,18 +460,21 @@ public class ReaderView extends javax.swing.JFrame {
         System.out.println("Nome: " + readerName);
         System.out.println("Tel: " + readerTel);
         System.out.println("Email: " + readerEmail);
-        
-        
-        
+
         createReader.addReader(readerId, readerName, readerCpf, readerTel, readerEmail);
-        
-        
     }//GEN-LAST:event_jButton6ActionPerformed
+
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         OrgnizeTable();
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+
+        new BookView(bookReaders).setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -505,6 +518,7 @@ public class ReaderView extends javax.swing.JFrame {
     private javax.swing.JTextField inputSearchReaders;
     private javax.swing.JTextField inputTel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

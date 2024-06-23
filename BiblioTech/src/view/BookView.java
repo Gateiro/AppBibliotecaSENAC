@@ -7,7 +7,6 @@ package view;
 import controller.BookController;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
-import controller.ReaderController;
 
 /**
  *
@@ -16,17 +15,20 @@ import controller.ReaderController;
 public class BookView extends javax.swing.JFrame {
 
     private DefaultTableModel modelo;
+
     private BookController createBook = new BookController();
-    private ReaderController createReader = new ReaderController();
 
-    Map<Integer, Map<String, String>> bookMap = createBook.listBook();
-    Map<Integer, Map<String, String>> readerMap = createReader.listReaders();
+    private Map<Integer, Map<String, String>> readerList;
 
-    /**
-     * Creates new form BookView
-     */
-    public BookView() {
+    private Map<Integer, Map<String, String>> bookMap = createBook.listBook();
+
+    public BookView(Map<Integer, Map<String, String>> readerMaps) {
+
+        System.out.println(readerMaps);
+
+        this.readerList = readerMaps;
         initComponents();
+
         modelo = new DefaultTableModel();
         modelo.addColumn("ISBN");
         modelo.addColumn("Título");
@@ -52,6 +54,7 @@ public class BookView extends javax.swing.JFrame {
         btnTabbedOne = new javax.swing.JButton();
         btnTabbed2 = new javax.swing.JButton();
         btnTabbed3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -117,6 +120,13 @@ public class BookView extends javax.swing.JFrame {
 
         btnTabbed3.setText("Lançar Emprestimos");
 
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -129,8 +139,13 @@ public class BookView extends javax.swing.JFrame {
                     .addComponent(btnTabbedOne, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,7 +159,9 @@ public class BookView extends javax.swing.JFrame {
                 .addComponent(btnTabbed2)
                 .addGap(18, 18, 18)
                 .addComponent(btnTabbed3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(91, 91, 91))
         );
 
         jLabel3.setText("Código ISBN:");
@@ -396,6 +413,11 @@ public class BookView extends javax.swing.JFrame {
         jLabel12.setText("Leitor");
 
         btnSearchBoxReader.setText("Pesquisar");
+        btnSearchBoxReader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBoxReaderActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -579,21 +601,23 @@ public class BookView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateBookActionPerformed
 
     private void btnUpdateListBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateListBooksActionPerformed
-        // TODO add your handling code here:
+        // Atualiza a tabela de livros (supondo que você tenha um método para isso)
         OrgnizeTable();
+
+        // Limpa todos os itens dos JComboBoxes antes de adicionar novos itens
         jComboBox1.removeAllItems();
         jComboBox2.removeAllItems();
-        // Adiciona os itens do bookMap ao JComboBox
+
+        // Adiciona os itens atualizados do bookMap ao JComboBox de livros
         for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
-            // Supondo que "title" é a chave para o título do livro no Map interno
             String bookTitle = entry.getValue().get("bookTitle");
             jComboBox1.addItem(bookTitle);
         }
-
-        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
-            // Supondo que "title" é a chave para o título do livro no Map interno
-            String bookTitle = entry.getValue().get("readerName");
-            jComboBox2.addItem(bookTitle);
+        //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
+        // Adiciona os itens atualizados do readerMap ao JComboBox de leitores
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
+            String readerName = entry.getValue().get("readerName");
+            jComboBox2.addItem(readerName);
         }
     }//GEN-LAST:event_btnUpdateListBooksActionPerformed
 
@@ -616,8 +640,8 @@ public class BookView extends javax.swing.JFrame {
             String bookTitle = entry.getValue().get("bookTitle");
             jComboBox1.addItem(bookTitle);
         }
-
-        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
+        //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
             // Supondo que "title" é a chave para o título do livro no Map interno
             String bookTitle = entry.getValue().get("readerName");
             jComboBox2.addItem(bookTitle);
@@ -685,10 +709,38 @@ public class BookView extends javax.swing.JFrame {
             // Verifica se o título do livro contém o texto de pesquisa
             if (search.isEmpty() || bookTitle.contains(search)) {
                 jComboBox1.addItem(entry.getValue().get("bookTitle"));
+                inputSearchFilterBook.setText("");
             }
         }
 
     }//GEN-LAST:event_btnSearchBoxBookActionPerformed
+
+    private void btnSearchBoxReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBoxReaderActionPerformed
+        // TODO add your handling code here:
+        String search = inputSearchFilterReader.getText().toLowerCase();
+
+        // Limpa todos os itens do JComboBox
+        jComboBox2.removeAllItems();
+        //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
+        // Adiciona os itens do bookMap ao JComboBox
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
+            String readerName = entry.getValue().get("readerName").toLowerCase();
+
+            // Verifica se o título do livro contém o texto de pesquisa
+            if (search.isEmpty() || readerName.contains(search)) {
+                jComboBox2.addItem(entry.getValue().get("readerName"));
+                inputSearchFilterReader.setText("");
+            }
+        }
+    }//GEN-LAST:event_btnSearchBoxReaderActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+
+        //new BookView(readerMap).setVisible(true);
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * Organiza a tabela com os dados recebido do controller
@@ -741,7 +793,7 @@ public class BookView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookView().setVisible(true);
+                //new BookView().setVisible(true);
             }
         });
     }
@@ -768,6 +820,7 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
