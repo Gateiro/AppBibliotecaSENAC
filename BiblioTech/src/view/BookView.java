@@ -7,6 +7,7 @@ package view;
 import controller.BookController;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
+import controller.LoanController;
 
 /**
  *
@@ -15,12 +16,16 @@ import javax.swing.table.DefaultTableModel;
 public class BookView extends javax.swing.JFrame {
 
     private DefaultTableModel modelo;
+    private DefaultTableModel modelo2;
 
     private BookController createBook = new BookController();
+    private LoanController createLoan = new LoanController();
 
     private Map<Integer, Map<String, String>> readerList;
 
     private Map<Integer, Map<String, String>> bookMap = createBook.listBook();
+
+    private Map<Integer, Map<String, String>> listLoans = createLoan.getListLoans();
 
     public BookView(Map<Integer, Map<String, String>> readerMaps) {
 
@@ -37,6 +42,17 @@ public class BookView extends javax.swing.JFrame {
         modelo.addColumn("Alugado");
         // Inicializa a jTable1 com o modelo vazio
         tblShowBooks.setModel(modelo);
+
+        modelo2 = new DefaultTableModel();
+        modelo2.addColumn("Isbn");
+        modelo2.addColumn("Titulo");
+        modelo2.addColumn("LeitorId");
+        modelo2.addColumn("Nome Leitor");
+        modelo2.addColumn("Data do Alugel");
+        modelo2.addColumn("Data para Devolução");
+        // Inicializa a jTable1 com o modelo vazio
+        tblShowLoans.setModel(modelo2);
+
     }
 
     /**
@@ -102,6 +118,15 @@ public class BookView extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblShowLoans = new javax.swing.JTable();
+        jPanel11 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
 
         jLabel7.setText("jLabel7");
 
@@ -302,7 +327,7 @@ public class BookView extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCreateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClearInputs, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(171, Short.MAX_VALUE))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -383,7 +408,7 @@ public class BookView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUpdateListBooks)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Visualizar Livros", jPanel3);
@@ -422,6 +447,11 @@ public class BookView extends javax.swing.JFrame {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -469,7 +499,7 @@ public class BookView extends javax.swing.JFrame {
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
         jLabel13.setText("Isbn");
@@ -558,6 +588,94 @@ public class BookView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Lançar Emprestimos", jPanel4);
 
+        jLabel17.setText("Pesquisa:");
+
+        jButton6.setText("Pesquisar");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(jButton6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        tblShowLoans.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tblShowLoans);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        jButton7.setText("Atualizar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7)))
+        );
+
+        jTabbedPane1.addTab("Visualizar Emprestimos", jPanel9);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -630,21 +748,25 @@ public class BookView extends javax.swing.JFrame {
 
         jTabbedPane1.setSelectedIndex(2);
         OrgnizeTable();
+        OrgnizeTableLoans();
 
         jComboBox1.removeAllItems();
         jComboBox2.removeAllItems();
 
-        // Adiciona os itens do bookMap ao JComboBox
+        // Adiciona os itens do bookMap ao JComboBox com ID e nome
         for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
-            // Supondo que "title" é a chave para o título do livro no Map interno
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
             String bookTitle = entry.getValue().get("bookTitle");
-            jComboBox1.addItem(bookTitle);
+            int bookId = entry.getKey();
+            jComboBox1.addItem(bookId + " - " + bookTitle);
         }
-        //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
-        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
-            // Supondo que "title" é a chave para o título do livro no Map interno
-            String bookTitle = entry.getValue().get("readerName");
-            jComboBox2.addItem(bookTitle);
+
+        // Adiciona os itens do readerList ao JComboBox com ID e nome
+        for (Map.Entry<Integer, Map<String, String>> entry : readerList.entrySet()) {
+            // Supondo que "readerName" é a chave para o nome do leitor no Map interno
+            String readerName = entry.getValue().get("readerName");
+            int readerId = entry.getKey();
+            jComboBox2.addItem(readerId + " - " + readerName);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -742,6 +864,35 @@ public class BookView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+
+        OrgnizeTableLoans();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        String selectedBookItem = (String) jComboBox1.getSelectedItem();
+        if (selectedBookItem != null) {
+            String[] parts = selectedBookItem.split(" - ");
+            int selectedBookId = Integer.parseInt(parts[0]);
+            String selectedBookName = parts[1];
+            System.out.println("Selected Book ID: " + selectedBookId);
+            System.out.println("Selected Book Name: " + selectedBookName);
+        }
+
+// Para obter o ID do item selecionado em jComboBox2
+        String selectedReaderItem = (String) jComboBox2.getSelectedItem();
+        if (selectedReaderItem != null) {
+            String[] parts = selectedReaderItem.split(" - ");
+            int selectedReaderId = Integer.parseInt(parts[0]);
+            String selectedReaderName = parts[1];
+            System.out.println("Selected Reader ID: " + selectedReaderId);
+            System.out.println("Selected Reader Name: " + selectedReaderName);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * Organiza a tabela com os dados recebido do controller
      */
@@ -760,6 +911,26 @@ public class BookView extends javax.swing.JFrame {
             String dataPublicacao = details.get("bookDatePublish");
             String isRent = details.get("bookIsRent");
             modelo.addRow(new Object[]{isbn, titulo, autor, dataPublicacao, isRent});
+        }
+    }
+
+    private void OrgnizeTableLoans() {
+        // Limpa o modelo atual da tabela
+        modelo2.setRowCount(0);
+
+        // Obtém os dados atualizados do controller
+        // Preenche o modelo com os dados do bookMap
+        for (Map.Entry<Integer, Map<String, String>> entry : listLoans.entrySet()) {
+            int isbn = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String bookId = details.get("bookId");
+            String bookName = details.get("bookName");
+            String readerId = details.get("readerCpf");
+            String readerName = details.get("readerName");
+            String loanDate = details.get("loanDate");
+            String loanReturn = details.get("loanReturn");
+            modelo2.addRow(new Object[]{isbn, bookName, readerId, readerName, loanDate, loanReturn});
         }
     }
 
@@ -821,6 +992,8 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -831,6 +1004,7 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -840,6 +1014,8 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -847,11 +1023,15 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tblShowBooks;
+    private javax.swing.JTable tblShowLoans;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,7 @@ public class BookModel {
         book1Details.put("bookTitle", "Senhor dos Anéis: A Sociedade do Anel");
         book1Details.put("bookAuthor", "J.R.R. Tolkien");
         book1Details.put("bookDatePublish", "29/07/1954");
-        book1Details.put("bookIsRent", "false");
+        book1Details.put("bookIsRent", "true");
         // Adiciona o primeiro livro ao bookMap usando o ISBN como chave
         bookMap.put(123456789, book1Details);
 
@@ -40,7 +40,7 @@ public class BookModel {
         book2Details.put("bookTitle", "Harry Potter e a Pedra Filosofal");
         book2Details.put("bookAuthor", "J.K. Rowling");
         book2Details.put("bookDatePublish", "26/06/1997");
-        book2Details.put("bookIsRent", "false");
+        book2Details.put("bookIsRent", "true");
         // Adiciona o segundo livro ao bookMap usando o ISBN como chave
         bookMap.put(987654321, book2Details);
     }

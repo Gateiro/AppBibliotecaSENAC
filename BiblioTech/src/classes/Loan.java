@@ -12,40 +12,25 @@ import java.util.List;
  * 
  */
 public class Loan {
-    private int loanId;
-    private int loanPersonId;
-    private int loanBookId;
     private String loanDate;
     private String loanReturn;
-    List loanList = new ArrayList();
-
-    /**
-     * Construtor para a classe Loan.
-     * @param loanId o ID do empréstimo.
-     * @param loanPersonId o ID da pessoa que fez o empréstimo.
-     * @param loanBookId o ID do livro emprestado.
-     * @param loanDate a data do empréstimo.
-     * @param loanReturn a data de devolução.
-     */
-    public Loan(int loanId, int loanPersonId, int loanBookId, String loanDate, String loanReturn) {
-        this.loanId = loanId;
-        this.loanPersonId = loanPersonId;
-        this.loanBookId = loanBookId;
-        this.loanDate = loanDate;
-        this.loanReturn = loanReturn;
+    // Getter for loanDate
+    public String getLoanDate() {
+        return loanDate;
     }
 
-    /**
-     * Obtém os detalhes do empréstimo como uma lista.
-     * @return uma lista contendo os detalhes do empréstimo.
-     */
-    public List getLoan() {
-        loanList.add(this.loanId);
-        loanList.add(this.loanPersonId);
-        loanList.add(this.loanBookId);
-        loanList.add(this.loanDate);
-        loanList.add(this.loanReturn);
+    // Setter for loanDate
+    public void setLoanDate(String loanDate) {
+        this.loanDate = loanDate;
+    }
 
-        return loanList;
+    // Getter for loanReturn
+    public String getLoanReturn() {
+        return loanReturn;
+    }
+
+    // Setter for loanReturn
+    public void setLoanReturn(String loanReturn) {
+        this.loanReturn = loanReturn;
     }
 }
