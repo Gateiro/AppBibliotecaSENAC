@@ -6,6 +6,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,6 +41,26 @@ public class ReaderModel {
         reader2Details.put("readerEmail", "sauron.white@ainur.com");
         // Adiciona o segundo livro ao bookMap usando o ISBN como chave
         readerMap.put(987654321, reader2Details);
+    }
+    
+        public void addReader(int readerId, String readerName, String readerCpf, String readerTel, String readerEmail) {
+        
+        // Verifica se o livro já existe pelo ISBN
+        if (!readerMap.containsKey(readerId)) {
+            // Cria um novo HashMap para armazenar os detalhes do livro
+            //String bookisRent = String.valueOf(bookIsRent);
+            Map<String, String> bookDetails = new HashMap<>();
+            bookDetails.put("readerId", Integer.toString(readerId));
+            bookDetails.put("readerName", readerName);
+            bookDetails.put("readerCpf", readerCpf);
+            bookDetails.put("readerTel", readerTel);
+            bookDetails.put("readerEmail", readerEmail);
+            // Adiciona o livro ao bookMap usando o ISBN como chave
+            readerMap.put(readerId, bookDetails);
+            JOptionPane.showMessageDialog(null, "Leitor inserido com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Leitor já existe");
+        }
     }
 
     public Map listReaders() {
