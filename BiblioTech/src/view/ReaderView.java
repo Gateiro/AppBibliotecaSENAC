@@ -31,8 +31,8 @@ public class ReaderView extends javax.swing.JFrame {
         // Inicializa a jTable1 com o modelo vazio
         tblListReaders.setModel(modelo);
     }
-    
-        private void OrgnizeTable() {
+
+    private void OrgnizeTable() {
         // Limpa o modelo atual da tabela
         modelo.setRowCount(0);
 
@@ -86,7 +86,7 @@ public class ReaderView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        inputSearchReaders = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListReaders = new javax.swing.JTable();
@@ -265,6 +265,11 @@ public class ReaderView extends javax.swing.JFrame {
         jLabel6.setText("Pesquisar:");
 
         jButton9.setText("Pesquisar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -274,7 +279,7 @@ public class ReaderView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputSearchReaders, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(jButton9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -285,7 +290,7 @@ public class ReaderView extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputSearchReaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -392,6 +397,34 @@ public class ReaderView extends javax.swing.JFrame {
         OrgnizeTable();
     }//GEN-LAST:event_formWindowOpened
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        // Limpa o modelo atual da tabela
+        String search = inputSearchReaders.getText();
+        modelo.setRowCount(0);
+
+        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
+        Map<Integer, Map<String, String>> bookReader = createReader.listReaders();
+
+        // Preenche o modelo com os dados do bookMap filtrando pelo texto de pesquisa
+        for (Map.Entry<Integer, Map<String, String>> entry : bookReader.entrySet()) {
+            int id = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String titulo = details.get("readerName");
+            String autor = details.get("readerCpf");
+            String dataPublicacao = details.get("readerTel");
+            String isRent = details.get("readerEmail");
+            // Verifica se o texto de pesquisa está vazio ou se o título ou autor contém o texto de pesquisa
+            if (search.isEmpty()
+                    || String.valueOf(id).contains(search)
+                    || titulo.toLowerCase().contains(search.toLowerCase())
+                    || autor.toLowerCase().contains(search.toLowerCase())) {
+                modelo.addRow(new Object[]{id, titulo, autor, dataPublicacao, isRent});
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -428,6 +461,7 @@ public class ReaderView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField inputSearchReaders;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -457,7 +491,6 @@ public class ReaderView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTabbedPane tabbedListReaders;
     private javax.swing.JTable tblListReaders;
     // End of variables declaration//GEN-END:variables
