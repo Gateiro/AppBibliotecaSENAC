@@ -4,10 +4,26 @@
  */
 package controller;
 
+import java.util.Map;
+import model.ReaderModel;
+
 /**
  *
- * 
+ *
  */
 public class ReaderController {
-    
+
+    ReaderModel createReader = new ReaderModel();
+
+    public ReaderController() {
+
+    }
+
+    public void addReader() {
+
+    }
+
+    public Map listReaders() {
+        return createReader.listReaders();
+    }
 }

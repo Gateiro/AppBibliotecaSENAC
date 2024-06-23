@@ -4,17 +4,52 @@
  */
 package view;
 
+import controller.ReaderController;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Will
  */
 public class ReaderView extends javax.swing.JFrame {
 
+    private DefaultTableModel modelo;
+    private ReaderController createReader = new ReaderController();
+
     /**
-     * Creates new form ReaderView
+     * Creates new form BookView
      */
     public ReaderView() {
         initComponents();
+        modelo = new DefaultTableModel();
+        modelo.addColumn("Id");
+        modelo.addColumn("Nome");
+        modelo.addColumn("Cpf");
+        modelo.addColumn("Telefone");
+        modelo.addColumn("Email");
+        // Inicializa a jTable1 com o modelo vazio
+        tblListReaders.setModel(modelo);
+    }
+    
+        private void OrgnizeTable() {
+        // Limpa o modelo atual da tabela
+        modelo.setRowCount(0);
+
+        // Obtém os dados atualizados do controller
+        Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
+
+        // Preenche o modelo com os dados do bookMap
+        for (Map.Entry<Integer, Map<String, String>> entry : bookReaders.entrySet()) {
+            int id = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String titulo = details.get("readerName");
+            String autor = details.get("readerCpf");
+            String dataPublicacao = details.get("readerTel");
+            String isRent = details.get("readerEmail");
+            modelo.addRow(new Object[]{id, titulo, autor, dataPublicacao, isRent});
+        }
     }
 
     /**
@@ -31,7 +66,7 @@ public class ReaderView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        Consultas = new javax.swing.JTabbedPane();
+        tabbedListReaders = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -54,12 +89,17 @@ public class ReaderView extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblListReaders = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("BiblioTech");
 
@@ -220,7 +260,7 @@ public class ReaderView extends javax.swing.JFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        Consultas.addTab("Cadastrar Leitor", jPanel2);
+        tabbedListReaders.addTab("Cadastrar Leitor", jPanel2);
 
         jLabel6.setText("Pesquisar:");
 
@@ -250,7 +290,7 @@ public class ReaderView extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblListReaders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -261,7 +301,7 @@ public class ReaderView extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblListReaders);
 
         jButton8.setText("Atualizar");
 
@@ -305,7 +345,7 @@ public class ReaderView extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        Consultas.addTab("Visualizar Leitor", jPanel3);
+        tabbedListReaders.addTab("Visualizar Leitor", jPanel3);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -318,7 +358,7 @@ public class ReaderView extends javax.swing.JFrame {
             .addGap(0, 497, Short.MAX_VALUE)
         );
 
-        Consultas.addTab("Consultas", jPanel4);
+        tabbedListReaders.addTab("Consultas", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,7 +367,7 @@ public class ReaderView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Consultas)
+                .addComponent(tabbedListReaders)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -335,7 +375,7 @@ public class ReaderView extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Consultas)
+                .addComponent(tabbedListReaders)
                 .addContainerGap())
         );
 
@@ -345,6 +385,12 @@ public class ReaderView extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        tabbedListReaders.setSelectedIndex(2);
+        OrgnizeTable();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -382,7 +428,6 @@ public class ReaderView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Consultas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -408,11 +453,12 @@ public class ReaderView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTabbedPane tabbedListReaders;
+    private javax.swing.JTable tblListReaders;
     // End of variables declaration//GEN-END:variables
 }
