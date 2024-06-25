@@ -890,6 +890,7 @@ public class BookView extends javax.swing.JFrame {
             String selectedReaderName = parts[1];
             System.out.println("Selected Reader ID: " + selectedReaderId);
             System.out.println("Selected Reader Name: " + selectedReaderName);
+            //Teste apenas para subir essa parte que não subiu junto
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
