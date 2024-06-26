@@ -32,7 +32,13 @@ public class LoanController {
         loan.setLoanDate(loanDate);
         loan.setLoanReturn(loanRetur);
         
-        loanModel.addLoan(book.getBookId(), person.getPersonId(), book.getBookTitle(), person.getPersonName(), loan.getLoanDate(), loan.getLoanReturn());
+        loanModel.addLoan(
+                book.getBookId(), 
+                person.getPersonId(), 
+                book.getBookTitle(), 
+                person.getPersonName(), 
+                loan.getLoanDate(), 
+                loan.getLoanReturn());
     }
     
     public Map getListLoans()

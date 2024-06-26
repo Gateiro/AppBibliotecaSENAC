@@ -729,13 +729,15 @@ public class BookView extends javax.swing.JFrame {
         // Adiciona os itens atualizados do bookMap ao JComboBox de livros
         for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
             String bookTitle = entry.getValue().get("bookTitle");
-            jComboBox1.addItem(bookTitle);
+            int bookId = entry.getKey();
+            jComboBox1.addItem(bookId + " - " + bookTitle);
         }
         //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
         // Adiciona os itens atualizados do readerMap ao JComboBox de leitores
         for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
             String readerName = entry.getValue().get("readerName");
-            jComboBox2.addItem(readerName);
+            int readerId = entry.getKey();
+            jComboBox2.addItem(readerId + " - " + readerName);
         }
     }//GEN-LAST:event_btnUpdateListBooksActionPerformed
 
@@ -866,7 +868,6 @@ public class BookView extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-
         OrgnizeTableLoans();
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -874,24 +875,23 @@ public class BookView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String selectedBookItem = (String) jComboBox1.getSelectedItem();
-        if (selectedBookItem != null) {
-            String[] parts = selectedBookItem.split(" - ");
-            int selectedBookId = Integer.parseInt(parts[0]);
-            String selectedBookName = parts[1];
-            System.out.println("Selected Book ID: " + selectedBookId);
-            System.out.println("Selected Book Name: " + selectedBookName);
-        }
 
-// Para obter o ID do item selecionado em jComboBox2
+        String[] parts = selectedBookItem.split(" - ");
+        int selectedBookId = Integer.parseInt(parts[0]);
+        String selectedBookName = parts[1];
+        System.out.println("Selected Book ID: " + selectedBookId);
+        System.out.println("Selected Book Name: " + selectedBookName);
+
+        // Para obter o ID do item selecionado em jComboBox2
         String selectedReaderItem = (String) jComboBox2.getSelectedItem();
-        if (selectedReaderItem != null) {
-            String[] parts = selectedReaderItem.split(" - ");
-            int selectedReaderId = Integer.parseInt(parts[0]);
-            String selectedReaderName = parts[1];
-            System.out.println("Selected Reader ID: " + selectedReaderId);
-            System.out.println("Selected Reader Name: " + selectedReaderName);
-            //Teste apenas para subir essa parte que não subiu junto
-        }
+
+        String[] parts2 = selectedReaderItem.split(" - ");
+        int selectedReaderId = Integer.parseInt(parts[0]);
+        String selectedReaderName = parts[1];
+        System.out.println("Selected Reader ID: " + selectedReaderId);
+        System.out.println("Selected Reader Name: " + selectedReaderName);
+
+        createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -922,16 +922,16 @@ public class BookView extends javax.swing.JFrame {
         // Obtém os dados atualizados do controller
         // Preenche o modelo com os dados do bookMap
         for (Map.Entry<Integer, Map<String, String>> entry : listLoans.entrySet()) {
-            int isbn = entry.getKey();
+            int loanId = entry.getKey();
             Map<String, String> details = entry.getValue();
 
             String bookId = details.get("bookId");
             String bookName = details.get("bookName");
-            String readerId = details.get("readerCpf");
+            String readerId = details.get("readerId");
             String readerName = details.get("readerName");
             String loanDate = details.get("loanDate");
             String loanReturn = details.get("loanReturn");
-            modelo2.addRow(new Object[]{isbn, bookName, readerId, readerName, loanDate, loanReturn});
+            modelo2.addRow(new Object[]{loanId, bookName, readerId, readerName, loanDate, loanReturn});
         }
     }
 
