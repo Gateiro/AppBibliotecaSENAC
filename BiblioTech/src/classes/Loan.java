@@ -14,6 +14,7 @@ import java.util.List;
 public class Loan {
     private String loanDate;
     private String loanReturn;
+    private String loanReturned;
     // Getter for loanDate
     public String getLoanDate() {
         return loanDate;
@@ -32,5 +33,15 @@ public class Loan {
     // Setter for loanReturn
     public void setLoanReturn(String loanReturn) {
         this.loanReturn = loanReturn;
+    }
+    
+    public void setloanReturned(String loanReturned)
+    {
+        this.loanReturned = loanReturned;
+    }
+    
+    public String getLoanReturned()
+    {
+        return loanReturned;
     }
 }

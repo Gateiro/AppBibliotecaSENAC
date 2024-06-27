@@ -24,13 +24,15 @@ public class LoanController {
 
     }
 
-    public void addLoan(int bookId, int readerId, String bookName, String readerName, String loanDate, String loanRetur) {
+    public void addLoan(int bookId, int readerId, String bookName, String readerName, String loanDate, String loanRetur, String loanReturned) {
+        
         book.setBookId(bookId);
         book.setBookTitle(bookName);
         person.setPersonId(readerId);
         person.setPersonName(readerName);
         loan.setLoanDate(loanDate);
         loan.setLoanReturn(loanRetur);
+        loan.setloanReturned(loanReturned);
         
         loanModel.addLoan(
                 book.getBookId(), 
@@ -38,7 +40,8 @@ public class LoanController {
                 book.getBookTitle(), 
                 person.getPersonName(), 
                 loan.getLoanDate(), 
-                loan.getLoanReturn());
+                loan.getLoanReturn(),
+                loan.getLoanReturned());
     }
     
     public Map getListLoans()

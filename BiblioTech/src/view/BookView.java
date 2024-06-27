@@ -44,12 +44,14 @@ public class BookView extends javax.swing.JFrame {
         tblShowBooks.setModel(modelo);
 
         modelo2 = new DefaultTableModel();
+        modelo2.addColumn("LoanId");
         modelo2.addColumn("Isbn");
         modelo2.addColumn("Titulo");
         modelo2.addColumn("LeitorId");
         modelo2.addColumn("Nome Leitor");
         modelo2.addColumn("Data do Alugel");
         modelo2.addColumn("Data para Devolução");
+        modelo2.addColumn("Data da devolução");
         // Inicializa a jTable1 com o modelo vazio
         tblShowLoans.setModel(modelo2);
 
@@ -832,8 +834,8 @@ public class BookView extends javax.swing.JFrame {
 
             // Verifica se o título do livro contém o texto de pesquisa
             if (search.isEmpty() || bookTitle.contains(search)) {
-                jComboBox1.addItem(entry.getValue().get("bookTitle"));
-                inputSearchFilterBook.setText("");
+                int bookId = entry.getKey();
+                jComboBox1.addItem(bookId + " - " + bookTitle);
             }
         }
 
@@ -850,11 +852,10 @@ public class BookView extends javax.swing.JFrame {
         for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
             // Supondo que "bookTitle" é a chave para o título do livro no Map interno
             String readerName = entry.getValue().get("readerName").toLowerCase();
-
             // Verifica se o título do livro contém o texto de pesquisa
             if (search.isEmpty() || readerName.contains(search)) {
-                jComboBox2.addItem(entry.getValue().get("readerName"));
-                inputSearchFilterReader.setText("");
+                int readerId = entry.getKey();
+                jComboBox2.addItem(readerId + " - " + readerName);
             }
         }
     }//GEN-LAST:event_btnSearchBoxReaderActionPerformed
@@ -891,7 +892,7 @@ public class BookView extends javax.swing.JFrame {
         System.out.println("Selected Reader ID: " + selectedReaderId);
         System.out.println("Selected Reader Name: " + selectedReaderName);
 
-        createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024");
+        createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -925,13 +926,15 @@ public class BookView extends javax.swing.JFrame {
             int loanId = entry.getKey();
             Map<String, String> details = entry.getValue();
 
+            String loanId2 = details.get("loandId");
             String bookId = details.get("bookId");
             String bookName = details.get("bookName");
             String readerId = details.get("readerId");
             String readerName = details.get("readerName");
             String loanDate = details.get("loanDate");
             String loanReturn = details.get("loanReturn");
-            modelo2.addRow(new Object[]{loanId, bookName, readerId, readerName, loanDate, loanReturn});
+            String dateReturned = details.get("dateReturned");
+            modelo2.addRow(new Object[]{loanId2, loanId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
         }
     }
 
