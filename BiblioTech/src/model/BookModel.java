@@ -64,6 +64,11 @@ public class BookModel {
             JOptionPane.showMessageDialog(null, "Livro já existe");
         }
     }
+    
+    public void changeStatusBook(int bookId)
+    {
+        
+    }
 
     public Map listBook() {
         return bookMap;

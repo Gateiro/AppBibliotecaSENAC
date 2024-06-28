@@ -8,6 +8,7 @@ import controller.BookController;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import controller.LoanController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -104,12 +105,12 @@ public class BookView extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         inputSearchFilterBook = new javax.swing.JTextField();
         btnSearchBoxBook = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         inputSearchFilterReader = new javax.swing.JTextField();
         btnSearchBoxReader = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jButton1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -415,6 +416,11 @@ public class BookView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Visualizar Livros", jPanel3);
 
+        inputSearchFilterBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputSearchFilterBookActionPerformed(evt);
+            }
+        });
         inputSearchFilterBook.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 inputSearchFilterBookKeyPressed(evt);
@@ -428,7 +434,7 @@ public class BookView extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -446,7 +452,7 @@ public class BookView extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Cadastrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -561,8 +567,6 @@ public class BookView extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -887,13 +891,47 @@ public class BookView extends javax.swing.JFrame {
         String selectedReaderItem = (String) jComboBox2.getSelectedItem();
 
         String[] parts2 = selectedReaderItem.split(" - ");
-        int selectedReaderId = Integer.parseInt(parts[0]);
-        String selectedReaderName = parts[1];
+        int selectedReaderId = Integer.parseInt(parts2[0]);
+        String selectedReaderName = parts2[1];
         System.out.println("Selected Reader ID: " + selectedReaderId);
         System.out.println("Selected Reader Name: " + selectedReaderName);
 
         createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
+// Verifica se o livro selecionado está presente no bookMap
+        if (bookMap.containsKey(selectedBookId)) {
+            // Obtém o mapa interno correspondente ao selectedBookId
+            Map<String, String> innerMap = bookMap.get(selectedBookId);
+
+            // Verifica se o mapa interno não é nulo (deveria estar presente se a chave externa existe)
+            if (innerMap != null) {
+                // Verifica o valor de "bookIsRent"
+                String bookIsRentValue = innerMap.get("bookIsRent");
+
+                // Verifica se o campo "bookIsRent" está marcado como true
+                if ("true".equals(bookIsRentValue)) {
+                    JOptionPane.showMessageDialog(null, "Este livro já está emprestado e não pode ser emprestado novamente.");
+                    System.out.println("Este livro já está emprestado e não pode ser emprestado novamente.");
+                    // Aqui você pode decidir como deseja lidar com a situação em que o livro já está emprestado
+                } else {
+                    // Atualiza o valor de "bookIsRent" para "true" no mapa interno
+                    innerMap.put("bookIsRent", "true");
+                    JOptionPane.showMessageDialog(null, "Livro emprestado com sucesso.");
+                    System.out.println("Livro emprestado com sucesso.");
+                    // Aqui você pode continuar com a lógica para emprestar o livro
+                }
+            } else {
+        // Caso o mapa interno seja nulo (algo inesperado)
+                // Aqui você pode decidir como lidar com esta situação
+            }
+        } else {
+    // Caso o selectedBookId não esteja presente no bookMap
+            // Aqui você pode decidir como lidar com esta situação
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void inputSearchFilterBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputSearchFilterBookActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputSearchFilterBookActionPerformed
 
     /**
      * Organiza a tabela com os dados recebido do controller
@@ -926,7 +964,6 @@ public class BookView extends javax.swing.JFrame {
             int loanId = entry.getKey();
             Map<String, String> details = entry.getValue();
 
-            String loanId2 = details.get("loandId");
             String bookId = details.get("bookId");
             String bookName = details.get("bookName");
             String readerId = details.get("readerId");
@@ -934,7 +971,7 @@ public class BookView extends javax.swing.JFrame {
             String loanDate = details.get("loanDate");
             String loanReturn = details.get("loanReturn");
             String dateReturned = details.get("dateReturned");
-            modelo2.addRow(new Object[]{loanId2, loanId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+            modelo2.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
         }
     }
 

@@ -54,7 +54,6 @@ public class LoanModel {
         
         // Cria um novo Map para armazenar os detalhes do leitor
         Map<String, String> readerDetails = new HashMap<>();
-        readerDetails.put("loandId", Integer.toString(bookId + readerId));
         readerDetails.put("bookId", Integer.toString(bookId));
         readerDetails.put("bookName", bookName);
         readerDetails.put("readerId", Integer.toString(readerId));
@@ -64,6 +63,8 @@ public class LoanModel {
         readerDetails.put("dateReturned", dateReturned);
         //int loanId = loadIdString;
         loanMap.put(bookId + readerId, readerDetails);
+
+        // Trocar para True o Livro no bookIsRent
     }
 
     public void removeLoan(int bookId) {

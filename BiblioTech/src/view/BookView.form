@@ -594,6 +594,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="inputSearchFilterBook">
                   <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputSearchFilterBookActionPerformed"/>
                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="inputSearchFilterBookKeyPressed"/>
                   </Events>
                 </Component>
