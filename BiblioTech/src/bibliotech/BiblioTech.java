@@ -9,6 +9,7 @@ import java.util.Map;
 import view.LoginView;
 import controller.BookController;
 import controller.ReaderController;
+import view.NewLoginView;
 
 /**
  *
@@ -30,7 +31,7 @@ public class BiblioTech {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginView().setVisible(true);
+                new NewLoginView().setVisible(true);
             }
         });
 
