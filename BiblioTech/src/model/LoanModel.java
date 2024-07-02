@@ -39,7 +39,7 @@ public class LoanModel {
 
         Map<String, String> loan2Details = new HashMap<>();
         loan2Details.put("loandId", "345");
-        loan2Details.put("bookId", "123456789");
+        loan2Details.put("bookId", "987654321");
         loan2Details.put("bookName", "Harry Potter e a Pedra Filosofal");
         loan2Details.put("readerId", "45627387392");
         loan2Details.put("readerName", "Saruman the White");
@@ -68,7 +68,7 @@ public class LoanModel {
     }
 
     public void removeLoan(int bookId) {
-        //bookModel.listBook().remove(1, "true");
+        bookModel.listBook().remove(1, "true");
     }
 
     // Método para retornar uma cópia do readerMap atualizado
