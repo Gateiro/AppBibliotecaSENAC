@@ -1079,14 +1079,17 @@ public class BookView extends javax.swing.JFrame {
         String selectedBookItem = (String) jComboBox3.getSelectedItem();
 
         String[] parts = selectedBookItem.split(" - ");
-        int selectedBookId = Integer.parseInt(parts[0]);
-        int selectedLoanId = Integer.parseInt(parts[1]);
+        System.out.println(parts[0]);
+        System.out.println(parts[1]);
+        int selectedBookId = Integer.parseInt(parts[1]);
+        int selectedLoanId = Integer.parseInt(parts[0]);
         Map<String, String> innerMap = bookMap.get(selectedBookId);
-        Map<String, String> innerMapLoan = listLoans.get(selectedBookId);
+        Map<String, String> innerMapLoan = listLoans.get(selectedLoanId);
         innerMap.put("bookIsRent", "false");
+        // Adicionar data Now()
         innerMapLoan.put("dateReturned", "00/00/0000");
         JOptionPane.showConfirmDialog(null, "Devolvido com sucesso");
-
+        OrgnizeTableLoans();
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1124,21 +1127,27 @@ public class BookView extends javax.swing.JFrame {
         // Obtém os dados atualizados do controller
         // Preenche o modelo com os dados do bookMap
         jComboBox3.removeAllItems();
-// Iterar sobre listLoans para obter detalhes dos empréstimos
         for (Map.Entry<Integer, Map<String, String>> loanEntry : listLoans.entrySet()) {
             int loanId = loanEntry.getKey();
             Map<String, String> loanInfo = loanEntry.getValue();
+            
 
+                
             // Supondo que listLoans contém uma chave "bookId" que corresponde ao ID do livro em bookMap
             int bookId = Integer.parseInt(loanInfo.get("bookId"));
             Map<String, String> bookInfo = bookMap.get(bookId);
 
-            // Verifique se bookInfo não é nulo antes de acessar bookTitle
+            // Verifique se bookInfo não é nulo e se bookIsRent é true antes de acessar bookTitle
             if (bookInfo != null) {
-                String bookTitle = bookInfo.get("bookTitle");
-                // Adicionar ao jComboBox3 com loanId, bookId e bookTitle
-                jComboBox3.addItem(loanId + " - " + bookId + " - " + bookTitle);
+                boolean isRented = Boolean.parseBoolean(bookInfo.get("bookIsRent"));
+
+                if (isRented) {
+                    String bookTitle = bookInfo.get("bookTitle");
+                    // Adicionar ao jComboBox3 com loanId, bookId e bookTitle
+                    jComboBox3.addItem(loanId + " - " + bookId + " - " + bookTitle);
+                }
             }
+            
         }
 
         for (Map.Entry<Integer, Map<String, String>> entry : listLoans.entrySet()) {
