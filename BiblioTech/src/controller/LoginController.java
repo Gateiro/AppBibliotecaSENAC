@@ -11,7 +11,7 @@ import classes.Person;
 import view.ReaderView;
 
 /**
- *
+ * 
  * 
  */
 public class LoginController {

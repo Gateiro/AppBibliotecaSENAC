@@ -29,7 +29,7 @@ public class ReaderModel {
         reader1Details.put("readerCpf", "45034562738");
         reader1Details.put("readerTel", "1599676554");
         reader1Details.put("readerEmail", "gandalf.gray@istari.com");
-        readerMap.put(123456789, reader1Details);
+        readerMap.put(45034562, reader1Details);
 
         Map<String, String> reader2Details = new HashMap<>();
         reader2Details.put("readerId", "2");
@@ -37,7 +37,7 @@ public class ReaderModel {
         reader2Details.put("readerCpf", "45627387392");
         reader2Details.put("readerTel", "1598372748");
         reader2Details.put("readerEmail", "saruman.white@istari.com");
-        readerMap.put(987654321, reader2Details);
+        readerMap.put(456273873, reader2Details);
     }
 
     public void addReader(int readerId, String readerName, String readerCpf, String readerTel, String readerEmail) {

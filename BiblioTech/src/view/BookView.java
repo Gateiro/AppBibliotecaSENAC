@@ -130,6 +130,14 @@ public class BookView extends javax.swing.JFrame {
         tblShowLoans = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        inputSearchFilterBook1 = new javax.swing.JTextField();
+        btnSearchBoxBook1 = new javax.swing.JButton();
+        jComboBox3 = new javax.swing.JComboBox<String>();
+        jLabel18 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         jLabel7.setText("jLabel7");
 
@@ -148,7 +156,7 @@ public class BookView extends javax.swing.JFrame {
 
         btnTabbed3.setText("Lançar Emprestimos");
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Leitores");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -266,28 +274,29 @@ public class BookView extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(23, 23, 23)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inputTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                            .addComponent(inputIsbn)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(40, 40, 40)
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5)))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel10)
-                                .addGap(18, 18, 18)))
+                                .addGap(33, 33, 33)))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inputDatePublished, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(inputTitle)
+                                .addComponent(inputIsbn)
+                                .addComponent(inputAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(inputIsRent, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
@@ -296,7 +305,7 @@ public class BookView extends javax.swing.JFrame {
                         .addComponent(btnClearInputs, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,6 +691,104 @@ public class BookView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Visualizar Emprestimos", jPanel9);
 
+        inputSearchFilterBook1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputSearchFilterBook1ActionPerformed(evt);
+            }
+        });
+        inputSearchFilterBook1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                inputSearchFilterBook1KeyPressed(evt);
+            }
+        });
+
+        btnSearchBoxBook1.setText("Pesquisar");
+        btnSearchBoxBook1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBoxBook1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Livro");
+
+        jButton8.setText("Lançar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("Atualizar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(inputSearchFilterBook1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                        .addGap(11, 11, 11)
+                        .addComponent(btnSearchBoxBook1))
+                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(jButton8)
+                            .addComponent(jButton9))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inputSearchFilterBook1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchBoxBook1))
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(267, 267, 267)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(269, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Lançar devolução", jPanel12);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -760,6 +867,23 @@ public class BookView extends javax.swing.JFrame {
 
         jComboBox1.removeAllItems();
         jComboBox2.removeAllItems();
+        jComboBox3.removeAllItems();
+        // Iterar sobre bookMap para obter detalhes dos livros
+// Iterar sobre listLoans para obter detalhes dos empréstimos
+        for (Map.Entry<Integer, Map<String, String>> loanEntry : listLoans.entrySet()) {
+            int loanId = loanEntry.getKey();
+            Map<String, String> loanInfo = loanEntry.getValue();
+
+            // Supondo que listLoans contém uma chave "bookId" que corresponde ao ID do livro em bookMap
+            int bookId = Integer.parseInt(loanInfo.get("bookId"));
+            Map<String, String> bookInfo = bookMap.get(bookId);
+
+            if (bookInfo != null) {
+                String bookTitle = bookInfo.get("bookTitle");
+                // Adicionar ao jComboBox3 com loanId, bookId e bookTitle
+                jComboBox3.addItem(loanId + " - " + bookId + " - " + bookTitle);
+            }
+        }
 
         // Adiciona os itens do bookMap ao JComboBox com ID e nome
         for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
@@ -896,7 +1020,6 @@ public class BookView extends javax.swing.JFrame {
         System.out.println("Selected Reader ID: " + selectedReaderId);
         System.out.println("Selected Reader Name: " + selectedReaderName);
 
-        createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
 // Verifica se o livro selecionado está presente no bookMap
         if (bookMap.containsKey(selectedBookId)) {
             // Obtém o mapa interno correspondente ao selectedBookId
@@ -911,20 +1034,22 @@ public class BookView extends javax.swing.JFrame {
                 if ("true".equals(bookIsRentValue)) {
                     JOptionPane.showMessageDialog(null, "Este livro já está emprestado e não pode ser emprestado novamente.");
                     System.out.println("Este livro já está emprestado e não pode ser emprestado novamente.");
+
                     // Aqui você pode decidir como deseja lidar com a situação em que o livro já está emprestado
                 } else {
                     // Atualiza o valor de "bookIsRent" para "true" no mapa interno
                     innerMap.put("bookIsRent", "true");
                     JOptionPane.showMessageDialog(null, "Livro emprestado com sucesso.");
                     System.out.println("Livro emprestado com sucesso.");
+                    createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
                     // Aqui você pode continuar com a lógica para emprestar o livro
                 }
             } else {
-        // Caso o mapa interno seja nulo (algo inesperado)
+                // Caso o mapa interno seja nulo (algo inesperado)
                 // Aqui você pode decidir como lidar com esta situação
             }
         } else {
-    // Caso o selectedBookId não esteja presente no bookMap
+            // Caso o selectedBookId não esteja presente no bookMap
             // Aqui você pode decidir como lidar com esta situação
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -932,6 +1057,47 @@ public class BookView extends javax.swing.JFrame {
     private void inputSearchFilterBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputSearchFilterBookActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputSearchFilterBookActionPerformed
+
+    private void inputSearchFilterBook1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputSearchFilterBook1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputSearchFilterBook1ActionPerformed
+
+    private void inputSearchFilterBook1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputSearchFilterBook1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputSearchFilterBook1KeyPressed
+
+    private void btnSearchBoxBook1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBoxBook1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchBoxBook1ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        String selectedBookItem = (String) jComboBox3.getSelectedItem();
+
+        String[] parts = selectedBookItem.split(" - ");
+        System.out.println(parts[0]);
+        System.out.println(parts[1]);
+        int selectedBookId = Integer.parseInt(parts[1]);
+        int selectedLoanId = Integer.parseInt(parts[0]);
+        Map<String, String> innerMap = bookMap.get(selectedBookId);
+        Map<String, String> innerMapLoan = listLoans.get(selectedLoanId);
+        innerMap.put("bookIsRent", "false");
+        // Adicionar data Now()
+        innerMapLoan.put("dateReturned", "00/00/0000");
+        JOptionPane.showConfirmDialog(null, "Devolvido com sucesso");
+        OrgnizeTableLoans();
+
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+
+        OrgnizeTableLoans();
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * Organiza a tabela com os dados recebido do controller
@@ -960,6 +1126,30 @@ public class BookView extends javax.swing.JFrame {
 
         // Obtém os dados atualizados do controller
         // Preenche o modelo com os dados do bookMap
+        jComboBox3.removeAllItems();
+        for (Map.Entry<Integer, Map<String, String>> loanEntry : listLoans.entrySet()) {
+            int loanId = loanEntry.getKey();
+            Map<String, String> loanInfo = loanEntry.getValue();
+            
+
+                
+            // Supondo que listLoans contém uma chave "bookId" que corresponde ao ID do livro em bookMap
+            int bookId = Integer.parseInt(loanInfo.get("bookId"));
+            Map<String, String> bookInfo = bookMap.get(bookId);
+
+            // Verifique se bookInfo não é nulo e se bookIsRent é true antes de acessar bookTitle
+            if (bookInfo != null) {
+                boolean isRented = Boolean.parseBoolean(bookInfo.get("bookIsRent"));
+
+                if (isRented) {
+                    String bookTitle = bookInfo.get("bookTitle");
+                    // Adicionar ao jComboBox3 com loanId, bookId e bookTitle
+                    jComboBox3.addItem(loanId + " - " + bookId + " - " + bookTitle);
+                }
+            }
+            
+        }
+
         for (Map.Entry<Integer, Map<String, String>> entry : listLoans.entrySet()) {
             int loanId = entry.getKey();
             Map<String, String> details = entry.getValue();
@@ -1015,6 +1205,7 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateBook;
     private javax.swing.JButton btnSearchBook;
     private javax.swing.JButton btnSearchBoxBook;
+    private javax.swing.JButton btnSearchBoxBook1;
     private javax.swing.JButton btnSearchBoxReader;
     private javax.swing.JButton btnTabbed2;
     private javax.swing.JButton btnTabbed3;
@@ -1026,6 +1217,7 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JTextField inputIsbn;
     private javax.swing.JTextField inputSearchBook;
     private javax.swing.JTextField inputSearchFilterBook;
+    private javax.swing.JTextField inputSearchFilterBook1;
     private javax.swing.JTextField inputSearchFilterReader;
     private javax.swing.JTextField inputTitle;
     private javax.swing.JButton jButton1;
@@ -1035,8 +1227,11 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1046,6 +1241,7 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1057,6 +1253,8 @@ public class BookView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
