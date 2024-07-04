@@ -30,11 +30,12 @@ public class NewMenuView extends javax.swing.JPanel {
         logo = new javax.swing.JLabel();
         biblioteca1 = new javax.swing.JLabel();
         fundoLaranja1 = new javax.swing.JPanel();
-        biblioteca3 = new javax.swing.JLabel();
+        stringBotaoAcervo = new javax.swing.JLabel();
         botaoAcervo1 = new javax.swing.JButton();
-        fundoLaranja2 = new javax.swing.JPanel();
-        biblioteca4 = new javax.swing.JLabel();
-        botaoAcervo2 = new javax.swing.JButton();
+        botaoAcervo3 = new javax.swing.JButton();
+        botaoAcervo4 = new javax.swing.JButton();
+        stringBotaoEmprestimos = new javax.swing.JLabel();
+        stringBotaoLeitores = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 85, 48));
         setForeground(new java.awt.Color(255, 85, 48));
@@ -65,14 +66,11 @@ public class NewMenuView extends javax.swing.JPanel {
         topoMenuLayout.setHorizontalGroup(
             topoMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topoMenuLayout.createSequentialGroup()
-                .addContainerGap(801, Short.MAX_VALUE)
+                .addContainerGap(532, Short.MAX_VALUE)
+                .addComponent(biblioteca1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(627, 627, 627))
-            .addGroup(topoMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(topoMenuLayout.createSequentialGroup()
-                    .addGap(534, 534, 534)
-                    .addComponent(biblioteca1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(807, Short.MAX_VALUE)))
         );
         topoMenuLayout.setVerticalGroup(
             topoMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,11 +78,10 @@ public class NewMenuView extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(71, Short.MAX_VALUE))
-            .addGroup(topoMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topoMenuLayout.createSequentialGroup()
-                    .addContainerGap(151, Short.MAX_VALUE)
-                    .addComponent(biblioteca1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(82, 82, 82)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topoMenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(biblioteca1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -100,19 +97,19 @@ public class NewMenuView extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        fundoLaranja1.setBackground(new java.awt.Color(255, 169, 13));
+        fundoLaranja1.setBackground(new java.awt.Color(204, 204, 204));
         fundoLaranja1.setToolTipText("");
         fundoLaranja1.setPreferredSize(new java.awt.Dimension(1600, 800));
 
-        biblioteca3.setBackground(new java.awt.Color(255, 169, 13));
-        biblioteca3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        biblioteca3.setForeground(new java.awt.Color(255, 255, 255));
-        biblioteca3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        biblioteca3.setText("Cadastro de novos \ntítulos e consulta");
-        biblioteca3.setToolTipText("Biblioteca");
-        biblioteca3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        biblioteca3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        biblioteca3.setOpaque(true);
+        stringBotaoAcervo.setBackground(new java.awt.Color(255, 169, 13));
+        stringBotaoAcervo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        stringBotaoAcervo.setForeground(new java.awt.Color(255, 255, 255));
+        stringBotaoAcervo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stringBotaoAcervo.setText("Cadastro de novos \ntítulos e consulta");
+        stringBotaoAcervo.setToolTipText("Biblioteca");
+        stringBotaoAcervo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        stringBotaoAcervo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stringBotaoAcervo.setOpaque(true);
 
         botaoAcervo1.setBackground(new java.awt.Color(255, 169, 13));
         botaoAcervo1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -121,6 +118,45 @@ public class NewMenuView extends javax.swing.JPanel {
         botaoAcervo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAcervo1.setOpaque(false);
 
+        botaoAcervo3.setBackground(new java.awt.Color(255, 169, 13));
+        botaoAcervo3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        botaoAcervo3.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAcervo3.setText("Empréstimos");
+        botaoAcervo3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAcervo3.setOpaque(false);
+
+        botaoAcervo4.setBackground(new java.awt.Color(255, 169, 13));
+        botaoAcervo4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        botaoAcervo4.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAcervo4.setText("Leitores");
+        botaoAcervo4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAcervo4.setOpaque(false);
+        botaoAcervo4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAcervo4ActionPerformed(evt);
+            }
+        });
+
+        stringBotaoEmprestimos.setBackground(new java.awt.Color(255, 169, 13));
+        stringBotaoEmprestimos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        stringBotaoEmprestimos.setForeground(new java.awt.Color(255, 255, 255));
+        stringBotaoEmprestimos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stringBotaoEmprestimos.setText("Realizar novo empréstimo, consultar pendências");
+        stringBotaoEmprestimos.setToolTipText("Biblioteca");
+        stringBotaoEmprestimos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        stringBotaoEmprestimos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stringBotaoEmprestimos.setOpaque(true);
+
+        stringBotaoLeitores.setBackground(new java.awt.Color(255, 169, 13));
+        stringBotaoLeitores.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        stringBotaoLeitores.setForeground(new java.awt.Color(255, 255, 255));
+        stringBotaoLeitores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stringBotaoLeitores.setText("\nCadastro de novos  assistidos, colaboradores, moradores e consulta");
+        stringBotaoLeitores.setToolTipText("Biblioteca");
+        stringBotaoLeitores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        stringBotaoLeitores.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stringBotaoLeitores.setOpaque(true);
+
         javax.swing.GroupLayout fundoLaranja1Layout = new javax.swing.GroupLayout(fundoLaranja1);
         fundoLaranja1.setLayout(fundoLaranja1Layout);
         fundoLaranja1Layout.setHorizontalGroup(
@@ -128,60 +164,32 @@ public class NewMenuView extends javax.swing.JPanel {
             .addGroup(fundoLaranja1Layout.createSequentialGroup()
                 .addGap(228, 228, 228)
                 .addGroup(fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(biblioteca3, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(stringBotaoAcervo, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                     .addComponent(botaoAcervo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1036, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addGroup(fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoAcervo4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stringBotaoLeitores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(stringBotaoEmprestimos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoAcervo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(262, 262, 262))
         );
         fundoLaranja1Layout.setVerticalGroup(
             fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoLaranja1Layout.createSequentialGroup()
-                .addContainerGap(193, Short.MAX_VALUE)
-                .addComponent(botaoAcervo1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(biblioteca3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(196, 196, 196))
-        );
-
-        fundoLaranja2.setBackground(new java.awt.Color(255, 169, 13));
-        fundoLaranja2.setToolTipText("");
-        fundoLaranja2.setPreferredSize(new java.awt.Dimension(1600, 800));
-
-        biblioteca4.setBackground(new java.awt.Color(255, 169, 13));
-        biblioteca4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        biblioteca4.setForeground(new java.awt.Color(255, 255, 255));
-        biblioteca4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        biblioteca4.setText("Cadastro de novos \ntítulos e consulta");
-        biblioteca4.setToolTipText("Biblioteca");
-        biblioteca4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        biblioteca4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        biblioteca4.setOpaque(true);
-
-        botaoAcervo2.setBackground(new java.awt.Color(255, 169, 13));
-        botaoAcervo2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        botaoAcervo2.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAcervo2.setText("Acervo");
-        botaoAcervo2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoAcervo2.setOpaque(false);
-
-        javax.swing.GroupLayout fundoLaranja2Layout = new javax.swing.GroupLayout(fundoLaranja2);
-        fundoLaranja2.setLayout(fundoLaranja2Layout);
-        fundoLaranja2Layout.setHorizontalGroup(
-            fundoLaranja2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fundoLaranja2Layout.createSequentialGroup()
-                .addGap(228, 228, 228)
-                .addGroup(fundoLaranja2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(biblioteca4, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-                    .addComponent(botaoAcervo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1036, Short.MAX_VALUE))
-        );
-        fundoLaranja2Layout.setVerticalGroup(
-            fundoLaranja2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoLaranja2Layout.createSequentialGroup()
-                .addContainerGap(193, Short.MAX_VALUE)
-                .addComponent(botaoAcervo2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(biblioteca4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(196, 196, 196))
+                .addContainerGap(171, Short.MAX_VALUE)
+                .addGroup(fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoAcervo1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAcervo4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAcervo3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(fundoLaranja1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stringBotaoAcervo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stringBotaoEmprestimos, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stringBotaoLeitores, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(206, 206, 206))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -189,37 +197,37 @@ public class NewMenuView extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fundoLaranja1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fundoLaranja2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(1616, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fundoLaranja1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fundoLaranja1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fundoLaranja2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoAcervo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAcervo4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoAcervo4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel biblioteca1;
-    private javax.swing.JLabel biblioteca3;
-    private javax.swing.JLabel biblioteca4;
     private javax.swing.JButton botaoAcervo1;
-    private javax.swing.JButton botaoAcervo2;
+    private javax.swing.JButton botaoAcervo3;
+    private javax.swing.JButton botaoAcervo4;
     private javax.swing.JPanel fundoLaranja1;
-    private javax.swing.JPanel fundoLaranja2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logo;
+    private javax.swing.JLabel stringBotaoAcervo;
+    private javax.swing.JLabel stringBotaoEmprestimos;
+    private javax.swing.JLabel stringBotaoLeitores;
     private javax.swing.JPanel topoMenu;
     // End of variables declaration//GEN-END:variables
 
