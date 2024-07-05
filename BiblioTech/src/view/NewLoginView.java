@@ -390,11 +390,19 @@ public class NewLoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_inputUsernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        /*
+          * Usa função getPassword() para receber a senha digitada
+        */
+        char[] passChar = inputPassword.getPassword();
         
-                char[] passChar = inputPassword.getPassword();
+        /*
+          * Tranforma de char para String
+        */
         String passString = String.valueOf(passChar);
 
+        /*
+          * Chama nosso Controller loginController para enviar ao nosso Model
+        */
         LoginController loginController = new LoginController(inputUsername.getText(), passString);
     }//GEN-LAST:event_jButton1ActionPerformed
 

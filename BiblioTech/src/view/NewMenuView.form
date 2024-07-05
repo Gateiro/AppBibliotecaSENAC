@@ -89,7 +89,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="532" max="32767" attributes="0"/>
+                      <EmptySpace pref="530" max="32767" attributes="0"/>
                       <Component id="biblioteca1" min="-2" pref="259" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="logo" min="-2" pref="172" max="-2" attributes="0"/>
@@ -137,7 +137,7 @@
                 <Property name="text" type="java.lang.String" value="BIBLIOTECA"/>
                 <Property name="toolTipText" type="java.lang.String" value="Biblioteca"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Padr&#xe3;o"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
@@ -161,17 +161,17 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="stringBotaoAcervo" alignment="0" pref="336" max="32767" attributes="0"/>
-                      <Component id="botaoAcervo1" alignment="0" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="botaoAcervo1" min="-2" pref="336" max="-2" attributes="0"/>
+                      <Component id="stringBotaoAcervo" min="-2" pref="336" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="botaoAcervo4" max="32767" attributes="0"/>
-                      <Component id="stringBotaoLeitores" max="32767" attributes="0"/>
+                      <Component id="stringBotaoLeitores" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="stringBotaoEmprestimos" max="32767" attributes="0"/>
                       <Component id="botaoAcervo3" max="32767" attributes="0"/>
@@ -216,7 +216,7 @@
             <Property name="text" type="java.lang.String" value="Cadastro de novos &#xa;t&#xed;tulos e consulta"/>
             <Property name="toolTipText" type="java.lang.String" value="Biblioteca"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Padr&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="opaque" type="boolean" value="true"/>
@@ -235,10 +235,12 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Acervo"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor em Forma de M&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAcervo1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botaoAcervo3">
           <Properties>
@@ -253,9 +255,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Empr&#xe9;stimos"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor em Forma de M&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="botaoAcervo4">
@@ -271,9 +272,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Leitores"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor em Forma de M&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAcervo4ActionPerformed"/>
@@ -294,7 +294,7 @@
             <Property name="text" type="java.lang.String" value="Realizar novo empr&#xe9;stimo, consultar pend&#xea;ncias"/>
             <Property name="toolTipText" type="java.lang.String" value="Biblioteca"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Padr&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="opaque" type="boolean" value="true"/>
@@ -315,7 +315,7 @@
             <Property name="text" type="java.lang.String" value="&#xa;Cadastro de novos  assistidos, colaboradores, moradores e consulta"/>
             <Property name="toolTipText" type="java.lang.String" value="Biblioteca"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Padr&#xe3;o"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="opaque" type="boolean" value="true"/>

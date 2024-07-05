@@ -7,14 +7,14 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * 
- */
 public class LoginModel {
         private Map<String, String> employeeDB;
 
-    // Construtor para inicializar o banco de dados fictício
+        
+     /**
+     * Construtor de loginModel.
+     * @return void
+     */
     public LoginModel() {
         employeeDB = new HashMap<>();
         initializeDatabase(); // Chamada para inicializar o banco de dados
@@ -28,12 +28,19 @@ public class LoginModel {
         employeeDB.put("admin4@example.com", "admin4");
     }
 
-    // Método para retornar todos os funcionários cadastrados
+    
+     /**
+     * Metodo para retornar lista de funcionarios cadastrados.
+     * @return Map
+     */
     public Map<String, String> getAllEmployees() {
         return employeeDB;
     }
 
-    // Método para verificar se o usuário existe e a senha está correta
+     /**
+     * Metodo para verificar sebha e username.
+     * @return boolean
+     */
     public boolean checkCredentials(String email, String password) {
         String storedPassword = employeeDB.get(email);
         return storedPassword != null && storedPassword.equals(password);

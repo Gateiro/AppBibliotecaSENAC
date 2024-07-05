@@ -17,12 +17,21 @@ public class BookModel {
     
     private Map<Integer, Map<String, String>> bookMap; // HashMap para armazenar livros
     
+    
+    /**
+     * Construtor para iniciar o banco de dados
+     * return void
+     */
     public BookModel() {
         this.bookMap = new HashMap<>();
         initializeDatabase(); // Inicializa o bookMap com alguns livros pré-cadastrados
     }
     
 
+    /**
+     * Metodo para popular a base de dados inicial
+     * return void
+     */
     private void initializeDatabase() {
         // Cria um novo HashMap para armazenar os detalhes do livro
         Map<String, String> book1Details = new HashMap<>();
@@ -45,6 +54,11 @@ public class BookModel {
         bookMap.put(987654321, book2Details);
     }
 
+    
+    /**
+     * Metodo para adicionar um livro ao Map
+     * return void
+     */
     public void addBook(int bookId, int bookIsbn, String bookTitle, String bookAuthor, String bookDatePublish, boolean bookIsRent) {
         
         // Verifica se o livro já existe pelo ISBN
@@ -65,11 +79,11 @@ public class BookModel {
         }
     }
     
-    public void changeStatusBook(int bookId)
-    {
-        
-    }
 
+    /**
+     * Metodo para Listar livros do Map
+     * return Map
+     */
     public Map listBook() {
         return bookMap;
     }
