@@ -6,11 +6,9 @@ package controller;
 
 import javax.swing.JOptionPane;
 import model.LoginModel;
-import view.BookView;
 import classes.Person;
-import javax.swing.JFrame;
-import view.NewMenuView;
-import view.ReaderView;
+import view.NewBookView;
+
 
 /**
  *
@@ -36,13 +34,7 @@ public class LoginController {
 
         // Check credenciais chamando o loginModel
         if (loginModel.checkCredentials(person.getPersonEmail(), person.getPersonPassword())) {
-            //new BookView().setVisible(true);
-            JFrame frame = new JFrame("Minha Aplicação");
-            NewMenuView menuView = new NewMenuView();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.getContentPane().add(menuView);
-            frame.pack(); // ajusta o tamanho do frame baseado no conteúdo
-            frame.setVisible(true);
+            new NewBookView().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos");
         }
