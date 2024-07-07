@@ -57,6 +57,8 @@ public class BookModel {
     
     /**
      * Metodo para adicionar um livro ao Map
+     * Aplicando regras de négocio
+     * Apenas um código ISBN
      * return void
      */
     public void addBook(int bookId, int bookIsbn, String bookTitle, String bookAuthor, String bookDatePublish, boolean bookIsRent) {

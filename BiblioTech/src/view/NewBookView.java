@@ -4,17 +4,61 @@
  */
 package view;
 
+import controller.BookController;
+import controller.LoanController;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author William
  */
 public class NewBookView extends javax.swing.JFrame {
 
+    private BookController bookController = new BookController();
+    private LoanController loanController = new LoanController();
+
+    private DefaultTableModel modeloTableBook;
+    private DefaultTableModel modeloTableLoan;
+
+    private Map<Integer, Map<String, String>> loanMap = loanController.listLoan();
+    private Map<Integer, Map<String, String>> bookMap = bookController.listBook();
+
     /**
      * Creates new form NewBookView
      */
     public NewBookView() {
         initComponents();
+
+        modeloTableBook = new DefaultTableModel();
+        modeloTableBook.addColumn("ISBN");
+        modeloTableBook.addColumn("Título");
+        modeloTableBook.addColumn("Autor");
+        modeloTableBook.addColumn("Data de Publicação");
+        modeloTableBook.addColumn("Alugado");
+        // Inicializa a jTable1 com o modelo vazio
+        tblListBook.setModel(modeloTableBook);
+
+        /* 
+            * Modelo de table para Emprestimos
+         */
+        modeloTableLoan = new DefaultTableModel();
+        modeloTableLoan.addColumn("LoanId");
+        modeloTableLoan.addColumn("Isbn");
+        modeloTableLoan.addColumn("Titulo");
+        modeloTableLoan.addColumn("LeitorId");
+        modeloTableLoan.addColumn("Nome Leitor");
+        modeloTableLoan.addColumn("Data do Alugel");
+        modeloTableLoan.addColumn("Data para Devolução");
+        modeloTableLoan.addColumn("Data da devolução");
+        // Inicializa a jTable1 com o modelo vazio
+        tblListLoans.setModel(modeloTableLoan);
     }
 
     /**
@@ -65,7 +109,7 @@ public class NewBookView extends javax.swing.JFrame {
         btnCleanInput = new javax.swing.JButton();
         btnCreateBook = new javax.swing.JButton();
         jPanel42 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
+        inputAuthor = new javax.swing.JTextField();
         jPanel24 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         btnClearImg = new javax.swing.JButton();
@@ -90,15 +134,16 @@ public class NewBookView extends javax.swing.JFrame {
         jPanel31 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jButton11 = new javax.swing.JButton();
+        cboxBooks = new javax.swing.JComboBox<>();
+        inputSearchLoanBook = new javax.swing.JTextField();
+        btnSearchBookLoan = new javax.swing.JButton();
         jPanel33 = new javax.swing.JPanel();
         jPanel34 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jPanel35 = new javax.swing.JPanel();
+        inputSearchReaderBook = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cboxReaders = new javax.swing.JComboBox<>();
         jSeparator4 = new javax.swing.JSeparator();
         jButton10 = new javax.swing.JButton();
         btnUpdateLoan1 = new javax.swing.JButton();
@@ -111,8 +156,10 @@ public class NewBookView extends javax.swing.JFrame {
         inputSearchLoan = new javax.swing.JTextField();
         btnSearchLoan = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
+        radioBtnReturned = new javax.swing.JRadioButton();
+        radioBtnOutdate = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblListBook1 = new javax.swing.JTable();
+        tblListLoans = new javax.swing.JTable();
         jPanel38 = new javax.swing.JPanel();
         btnUpdateLoan = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
@@ -124,7 +171,7 @@ public class NewBookView extends javax.swing.JFrame {
         jPanel43 = new javax.swing.JPanel();
         jPanel44 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cboxBookReturn = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
@@ -134,6 +181,11 @@ public class NewBookView extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 173, 157));
 
@@ -267,7 +319,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -519,6 +571,11 @@ public class NewBookView extends javax.swing.JFrame {
         btnCreateBook.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCreateBook.setForeground(new java.awt.Color(255, 255, 255));
         btnCreateBook.setText("Cadastrar");
+        btnCreateBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -544,11 +601,11 @@ public class NewBookView extends javax.swing.JFrame {
         jPanel42.setLayout(jPanel42Layout);
         jPanel42Layout.setHorizontalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3)
+            .addComponent(inputAuthor)
         );
         jPanel42Layout.setVerticalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+            .addComponent(inputAuthor, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -677,7 +734,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(340, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastrar Livro", jPanel3);
@@ -695,6 +752,11 @@ public class NewBookView extends javax.swing.JFrame {
 
         btnSearchBook.setBackground(new java.awt.Color(255, 169, 13));
         btnSearchBook.setText("P");
+        btnSearchBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -745,6 +807,11 @@ public class NewBookView extends javax.swing.JFrame {
         btnUpdateBook.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdateBook.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateBook.setText("Atualizar");
+        btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -760,7 +827,7 @@ public class NewBookView extends javax.swing.JFrame {
             .addGroup(jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
@@ -874,11 +941,16 @@ public class NewBookView extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxBooks.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton11.setBackground(new java.awt.Color(255, 169, 13));
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("P");
+        btnSearchBookLoan.setBackground(new java.awt.Color(255, 169, 13));
+        btnSearchBookLoan.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearchBookLoan.setText("P");
+        btnSearchBookLoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBookLoanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -890,11 +962,11 @@ public class NewBookView extends javax.swing.JFrame {
                     .addComponent(jPanel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel31Layout.createSequentialGroup()
                         .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboxBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel31Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(inputSearchLoanBook, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnSearchBookLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -905,10 +977,10 @@ public class NewBookView extends javax.swing.JFrame {
                 .addComponent(jPanel30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                    .addComponent(inputSearchLoanBook)
+                    .addComponent(btnSearchBookLoan, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboxBooks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -940,18 +1012,18 @@ public class NewBookView extends javax.swing.JFrame {
         jPanel35.setLayout(jPanel35Layout);
         jPanel35Layout.setHorizontalGroup(
             jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(inputSearchReaderBook, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         jPanel35Layout.setVerticalGroup(
             jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(inputSearchReaderBook, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jButton9.setBackground(new java.awt.Color(255, 169, 13));
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
         jButton9.setText("P");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxReaders.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
         jPanel33.setLayout(jPanel33Layout);
@@ -963,7 +1035,7 @@ public class NewBookView extends javax.swing.JFrame {
                     .addComponent(jPanel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel33Layout.createSequentialGroup()
                         .addGroup(jPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboxReaders, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel33Layout.createSequentialGroup()
                                 .addComponent(jPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -981,7 +1053,7 @@ public class NewBookView extends javax.swing.JFrame {
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jPanel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboxReaders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -989,11 +1061,21 @@ public class NewBookView extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("Cadastrar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         btnUpdateLoan1.setBackground(new java.awt.Color(255, 169, 13));
         btnUpdateLoan1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdateLoan1.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateLoan1.setText("Atualizar");
+        btnUpdateLoan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateLoan1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
         jPanel41.setLayout(jPanel41Layout);
@@ -1093,6 +1175,25 @@ public class NewBookView extends javax.swing.JFrame {
 
         btnSearchLoan.setBackground(new java.awt.Color(255, 169, 13));
         btnSearchLoan.setText("P");
+        btnSearchLoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchLoanActionPerformed(evt);
+            }
+        });
+
+        radioBtnReturned.setText("Devolvidos");
+        radioBtnReturned.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtnReturnedActionPerformed(evt);
+            }
+        });
+
+        radioBtnOutdate.setText("Vencidos");
+        radioBtnOutdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBtnOutdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
@@ -1107,8 +1208,12 @@ public class NewBookView extends javax.swing.JFrame {
                             .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputSearchLoan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnSearchLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnSearchLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioBtnReturned)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioBtnOutdate)))
+                .addContainerGap(601, Short.MAX_VALUE))
         );
         jPanel37Layout.setVerticalGroup(
             jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1117,14 +1222,17 @@ public class NewBookView extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSearchLoan, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addGroup(jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSearchLoan, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(radioBtnReturned)
+                        .addComponent(radioBtnOutdate))
                     .addComponent(inputSearchLoan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tblListBook1.setModel(new javax.swing.table.DefaultTableModel(
+        tblListLoans.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1135,7 +1243,7 @@ public class NewBookView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tblListBook1);
+        jScrollPane2.setViewportView(tblListLoans);
 
         jPanel38.setBackground(new java.awt.Color(0, 173, 157));
 
@@ -1143,6 +1251,11 @@ public class NewBookView extends javax.swing.JFrame {
         btnUpdateLoan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdateLoan.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateLoan.setText("Atualizar");
+        btnUpdateLoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateLoanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
         jPanel38.setLayout(jPanel38Layout);
@@ -1177,7 +1290,7 @@ public class NewBookView extends javax.swing.JFrame {
             .addGroup(jPanel32Layout.createSequentialGroup()
                 .addComponent(jPanel37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel38, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1260,7 +1373,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxBookReturn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton13.setBackground(new java.awt.Color(255, 169, 13));
         jButton13.setForeground(new java.awt.Color(255, 255, 255));
@@ -1276,7 +1389,7 @@ public class NewBookView extends javax.swing.JFrame {
                     .addComponent(jPanel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel43Layout.createSequentialGroup()
                         .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboxBookReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel43Layout.createSequentialGroup()
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1294,7 +1407,7 @@ public class NewBookView extends javax.swing.JFrame {
                     .addComponent(jTextField2)
                     .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboxBookReturn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -1302,11 +1415,21 @@ public class NewBookView extends javax.swing.JFrame {
         jButton14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton14.setForeground(new java.awt.Color(255, 255, 255));
         jButton14.setText("Devolver");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
 
         btnUpdateLoan2.setBackground(new java.awt.Color(255, 169, 13));
         btnUpdateLoan2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdateLoan2.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateLoan2.setText("Atualizar");
+        btnUpdateLoan2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateLoan2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
         jPanel45.setLayout(jPanel45Layout);
@@ -1390,7 +1513,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addGroup(jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel46, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -1432,7 +1555,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1444,7 +1567,7 @@ public class NewBookView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -1474,6 +1597,419 @@ public class NewBookView extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(4);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnCreateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateBookActionPerformed
+        /* 
+        * Pega variveis dos inputs
+         */
+        int isbn = Integer.parseInt(inputIsbn.getText());
+        boolean isRent = false;
+        String title = inputTitle.getText();
+        String author = inputAuthor.getText();
+        String datePublish = inputDate.getText();
+        /* 
+        * Chama controller para adicionar book
+         */
+        bookController.addBook(isbn, isbn, title, author, datePublish, isRent);
+    }//GEN-LAST:event_btnCreateBookActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        listTableBooks();
+        listTableLoans();
+        cboxBooks.removeAllItems();
+        cboxReaders.removeAllItems();
+
+        // Adiciona os itens do bookMap ao JComboBox com ID e nome
+        for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
+            String bookTitle = entry.getValue().get("bookTitle");
+            int bookId = entry.getKey();
+            cboxBooks.addItem(bookId + " - " + bookTitle);
+        }
+
+        // Adiciona os itens do readerList ao JComboBox com ID e nome
+        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+            // Supondo que "readerName" é a chave para o nome do leitor no Map interno
+            String readerName = entry.getValue().get("readerName");
+            int readerId = entry.getKey();
+            cboxReaders.addItem(readerId + " - " + readerName);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
+        listTableBooks();
+    }//GEN-LAST:event_btnUpdateBookActionPerformed
+
+    private void btnSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookActionPerformed
+        // Limpa o modelo atual da tabela
+        String search = inputSearchBook.getText();
+        modeloTableBook.setRowCount(0);
+
+        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
+        Map<Integer, Map<String, String>> bookMap = bookController.listBook();
+
+        // Preenche o modelo com os dados do bookMap filtrando pelo texto de pesquisa
+        for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
+            int isbn = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String titulo = details.get("bookTitle");
+            String autor = details.get("bookAuthor");
+            String dataPublicacao = details.get("bookDatePublish");
+            String isRent = details.get("bookIsRent");
+            // Verifica se o texto de pesquisa está vazio ou se o título ou autor contém o texto de pesquisa
+            if (search.isEmpty()
+                    || String.valueOf(isbn).contains(search)
+                    || titulo.toLowerCase().contains(search.toLowerCase())
+                    || autor.toLowerCase().contains(search.toLowerCase())) {
+                modeloTableBook.addRow(new Object[]{isbn, titulo, autor, dataPublicacao, isRent});
+            }
+        }
+
+
+    }//GEN-LAST:event_btnSearchBookActionPerformed
+
+    private void btnSearchBookLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookLoanActionPerformed
+        // TODO add your handling code here:
+        String search = inputSearchLoanBook.getText().toLowerCase();
+
+        // Limpa todos os itens do JComboBox
+        cboxBooks.removeAllItems();
+
+        // Adiciona os itens do bookMap ao JComboBox
+        for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
+            String bookTitle = entry.getValue().get("bookTitle").toLowerCase();
+
+            // Verifica se o título do livro contém o texto de pesquisa
+            if (search.isEmpty() || bookTitle.contains(search)) {
+                int bookId = entry.getKey();
+                cboxBooks.addItem(bookId + " - " + bookTitle);
+            }
+        }
+    }//GEN-LAST:event_btnSearchBookLoanActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+
+        String selectedBookItem = (String) cboxBooks.getSelectedItem();
+
+        String[] parts = selectedBookItem.split(" - ");
+        int selectedBookId = Integer.parseInt(parts[0]);
+        String selectedBookName = parts[1];
+
+        // Para obter o ID do item selecionado em jComboBox2
+        String selectedReaderItem = (String) cboxReaders.getSelectedItem();
+
+        String[] parts2 = selectedReaderItem.split(" - ");
+        int selectedReaderId = Integer.parseInt(parts2[0]);
+
+        String selectedReaderName = parts2[1];
+        if (bookMap.containsKey(selectedBookId)) {
+            // Obtém o mapa interno correspondente ao selectedBookId
+            Map<String, String> innerMap = bookMap.get(selectedBookId);
+
+            // Verifica se o mapa interno não é nulo (deveria estar presente se a chave externa existe)
+            if (innerMap != null) {
+                // Verifica o valor de "bookIsRent"
+                String bookIsRentValue = innerMap.get("bookIsRent");
+
+                // Verifica se o campo "bookIsRent" está marcado como true
+                if ("true".equals(bookIsRentValue)) {
+                    JOptionPane.showMessageDialog(null, "Este livro já está emprestado e não pode ser emprestado novamente.");
+                    System.out.println("Este livro já está emprestado e não pode ser emprestado novamente.");
+
+                    // Aqui você pode decidir como deseja lidar com a situação em que o livro já está emprestado
+                } else {
+                    // Atualiza o valor de "bookIsRent" para "true" no mapa interno
+                    innerMap.put("bookIsRent", "true");
+                    JOptionPane.showMessageDialog(null, "Livro emprestado com sucesso.");
+                    System.out.println("Livro emprestado com sucesso.");
+                    ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+                    LocalDate today = LocalDate.now(zoneId);
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate todayPlus30Days = today.plusDays(30);
+
+                    loanController.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, today.format(dateFormatter), todayPlus30Days.format(dateFormatter), "");
+                    // Aqui você pode continuar com a lógica para emprestar o livro
+                }
+            } else {
+                // Caso o mapa interno seja nulo (algo inesperado)
+                // Aqui você pode decidir como lidar com esta situação
+            }
+        } else {
+            // Caso o selectedBookId não esteja presente no bookMap
+            // Aqui você pode decidir como lidar com esta situação
+        }
+
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void btnUpdateLoan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLoan1ActionPerformed
+
+        cboxBooks.removeAllItems();
+        cboxReaders.removeAllItems();
+        // Adiciona os itens do bookMap ao JComboBox com ID e nome
+        for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
+            String bookTitle = entry.getValue().get("bookTitle");
+            int bookId = entry.getKey();
+            cboxBooks.addItem(bookId + " - " + bookTitle);
+        }
+
+        // Adiciona os itens do readerList ao JComboBox com ID e nome
+        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+            // Supondo que "readerName" é a chave para o nome do leitor no Map interno
+            String readerName = entry.getValue().get("readerName");
+            int readerId = entry.getKey();
+            cboxReaders.addItem(readerId + " - " + readerName);
+        }
+    }//GEN-LAST:event_btnUpdateLoan1ActionPerformed
+
+    private void btnUpdateLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLoanActionPerformed
+        listTableLoans();
+    }//GEN-LAST:event_btnUpdateLoanActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+
+        ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+        LocalDate today = LocalDate.now(zoneId);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String selectedBookItem = (String) cboxBookReturn.getSelectedItem();
+
+        String[] parts = selectedBookItem.split(" - ");
+        System.out.println(parts[0]);
+        System.out.println(parts[1]);
+        int selectedBookId = Integer.parseInt(parts[1]);
+        int selectedLoanId = Integer.parseInt(parts[0]);
+        Map<String, String> innerMap = bookMap.get(selectedBookId);
+        Map<String, String> innerMapLoan = loanMap.get(selectedLoanId);
+        innerMap.put("bookIsRent", "false");
+        // Verifica se há atraso na devolução
+        String loanReturnDateString = innerMapLoan.get("loanReturn");
+        LocalDate loanReturnDate = LocalDate.parse(loanReturnDateString, dateFormatter);
+        long daysDifference = ChronoUnit.DAYS.between(loanReturnDate, today);
+        if (daysDifference > 0) {
+            // Calcula a multa
+            double multa = daysDifference * 1.0; // R$1 por dia de atraso
+
+            // Exibe a mensagem com a multa
+            JOptionPane.showConfirmDialog(null, "Devolução com atraso de " + daysDifference + " dias.\n"
+                    + "Multa a ser cobrada: R$" + multa + "\n Deseja Efetuar a cobrança?");
+        }
+
+        // Atualiza a data de retorno do empréstimo
+        innerMapLoan.put("dateReturned", today.format(dateFormatter));
+        JOptionPane.showMessageDialog(null, "Devolvido com sucesso");
+        listTableLoans();
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void btnUpdateLoan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLoan2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateLoan2ActionPerformed
+
+    private void btnSearchLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLoanActionPerformed
+        // Limpa o modelo atual da tabela
+        String search = inputSearchLoan.getText();
+        modeloTableLoan.setRowCount(0);
+
+        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
+        Map<Integer, Map<String, String>> loanMap = loanController.listLoan();
+
+        // Preenche o modelo com os dados do bookMap filtrando pelo texto de pesquisa
+        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+            int loanId = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String bookId = details.get("bookId");
+            String bookName = details.get("bookName");
+            String readerId = details.get("readerId");
+            String readerName = details.get("readerName");
+            String loanDate = details.get("loanDate");
+            String loanReturn = details.get("loanReturn");
+            String dateReturned = details.get("dateReturned");
+            // Verifica se o texto de pesquisa está vazio ou se o título ou autor contém o texto de pesquisa
+            if (search.isEmpty()
+                    || String.valueOf(loanId).contains(search)
+                    || bookId.toLowerCase().contains(search.toLowerCase())
+                    || readerId.toLowerCase().contains(search.toLowerCase())
+                    || readerName.toLowerCase().contains(search.toLowerCase())
+                    || loanDate.toLowerCase().contains(search.toLowerCase())
+                    || loanReturn.toLowerCase().contains(search.toLowerCase())
+                    || bookName.toLowerCase().contains(search.toLowerCase())) {
+                modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+            }
+        }
+
+    }//GEN-LAST:event_btnSearchLoanActionPerformed
+
+    private void radioBtnReturnedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtnReturnedActionPerformed
+        modeloTableLoan.setRowCount(0); // Limpa o modelo da tabela antes de preencher novamente
+
+        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
+        Map<Integer, Map<String, String>> loanMap = loanController.listLoan();
+
+        // Verifica se o JRadioButton está selecionado
+        if (radioBtnReturned.isSelected()) {
+            // Preenche o modelo com os dados do loanMap filtrando pelos empréstimos que possuem data de devolução
+            for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+                int loanId = entry.getKey();
+                Map<String, String> details = entry.getValue();
+
+                String dateReturned = details.get("dateReturned");
+
+                // Verifica se dateReturned não está vazio
+                if (!dateReturned.isEmpty()) {
+                    String bookId = details.get("bookId");
+                    String bookName = details.get("bookName");
+                    String readerId = details.get("readerId");
+                    String readerName = details.get("readerName");
+                    String loanDate = details.get("loanDate");
+                    String loanReturn = details.get("loanReturn");
+
+                    modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+                }
+            }
+        } else {
+            // Caso o JRadioButton não esteja selecionado, mostra todos os empréstimos
+            for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+                int loanId = entry.getKey();
+                Map<String, String> details = entry.getValue();
+
+                String bookId = details.get("bookId");
+                String bookName = details.get("bookName");
+                String readerId = details.get("readerId");
+                String readerName = details.get("readerName");
+                String loanDate = details.get("loanDate");
+                String loanReturn = details.get("loanReturn");
+                String dateReturned = details.get("dateReturned");
+
+                modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+            }
+        }
+
+        // Atualiza a interface gráfica para refletir as mudanças na tabela
+        modeloTableLoan.fireTableDataChanged();
+    }//GEN-LAST:event_radioBtnReturnedActionPerformed
+
+    private void radioBtnOutdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtnOutdateActionPerformed
+        modeloTableLoan.setRowCount(0); // Limpa o modelo da tabela antes de preencher novamente
+
+        // Obtém a data atual
+        LocalDate currentDate = LocalDate.now();
+
+        // Obtém os dados atualizados do controller (supondo que o método listBook() retorna o Map<Integer, Map<String, String>>)
+        Map<Integer, Map<String, String>> loanMap = loanController.listLoan();
+
+        // Verifica se o JRadioButton está selecionado
+        if (radioBtnOutdate.isSelected()) {
+            // Preenche o modelo com os dados do loanMap filtrando pelos empréstimos que possuem data de devolução
+            // e onde a data atual é maior que loanReturn
+            for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+                int loanId = entry.getKey();
+                Map<String, String> details = entry.getValue();
+
+                String loanReturnStr = details.get("loanReturn");
+
+                // Verifica se loanReturn não está vazio
+                if (!loanReturnStr.isEmpty()) {
+                    LocalDate loanReturnDate = LocalDate.parse(loanReturnStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                    // Verifica se a data atual é maior que loanReturnDate
+                    if (currentDate.isAfter(loanReturnDate)) {
+                        String bookId = details.get("bookId");
+                        String bookName = details.get("bookName");
+                        String readerId = details.get("readerId");
+                        String readerName = details.get("readerName");
+                        String loanDate = details.get("loanDate");
+                        String loanReturn = details.get("loanReturn");
+                        String dateReturned = details.get("dateReturned");
+
+                        modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+                    }
+                }
+            }
+        } else {
+            // Caso o JRadioButton não esteja selecionado, mostra todos os empréstimos
+            for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+                int loanId = entry.getKey();
+                Map<String, String> details = entry.getValue();
+
+                String bookId = details.get("bookId");
+                String bookName = details.get("bookName");
+                String readerId = details.get("readerId");
+                String readerName = details.get("readerName");
+                String loanDate = details.get("loanDate");
+                String loanReturn = details.get("loanReturn");
+                String dateReturned = details.get("dateReturned");
+
+                modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+            }
+        }
+
+        // Atualiza a interface gráfica para refletir as mudanças na tabela
+        modeloTableLoan.fireTableDataChanged();
+    }//GEN-LAST:event_radioBtnOutdateActionPerformed
+
+    public void listTableBooks() {
+        // Limpa o modelo atual da tabela
+        modeloTableBook.setRowCount(0);
+
+        // Obtém os dados atualizados do controller
+        // Preenche o modelo com os dados do bookMap
+        for (Map.Entry<Integer, Map<String, String>> entry : bookMap.entrySet()) {
+            int isbn = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String titulo = details.get("bookTitle");
+            String autor = details.get("bookAuthor");
+            String dataPublicacao = details.get("bookDatePublish");
+            String isRent = details.get("bookIsRent");
+            modeloTableBook.addRow(new Object[]{isbn, titulo, autor, dataPublicacao, isRent});
+        }
+    }
+
+    public void listTableLoans() {
+        modeloTableLoan.setRowCount(0);
+
+        // Obtém os dados atualizados do controller
+        // Preenche o modelo com os dados do bookMap
+        cboxBookReturn.removeAllItems();
+        for (Map.Entry<Integer, Map<String, String>> loanEntry : loanMap.entrySet()) {
+            int loanId = loanEntry.getKey();
+            Map<String, String> loanInfo = loanEntry.getValue();
+
+            // Supondo que listLoans contém uma chave "bookId" que corresponde ao ID do livro em bookMap
+            int bookId = Integer.parseInt(loanInfo.get("bookId"));
+            Map<String, String> bookInfo = bookMap.get(bookId);
+
+            // Verifique se bookInfo não é nulo e se bookIsRent é true antes de acessar bookTitle
+            if (bookInfo != null) {
+                boolean isRented = Boolean.parseBoolean(bookInfo.get("bookIsRent"));
+
+                if (isRented) {
+                    String bookTitle = bookInfo.get("bookTitle");
+                    // Adicionar ao jComboBox3 com loanId, bookId e bookTitle
+                    cboxBookReturn.addItem(loanId + " - " + bookId + " - " + bookTitle);
+                }
+            }
+
+        }
+
+        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+            int loanId = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String bookId = details.get("bookId");
+            String bookName = details.get("bookName");
+            String readerId = details.get("readerId");
+            String readerName = details.get("readerName");
+            String loanDate = details.get("loanDate");
+            String loanReturn = details.get("loanReturn");
+            String dateReturned = details.get("dateReturned");
+            modeloTableLoan.addRow(new Object[]{loanId, bookId, bookName, readerId, readerName, loanDate, loanReturn, dateReturned});
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -1516,19 +2052,25 @@ public class NewBookView extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateBook;
     private javax.swing.JButton btnInsertImg;
     private javax.swing.JButton btnSearchBook;
+    private javax.swing.JButton btnSearchBookLoan;
     private javax.swing.JButton btnSearchLoan;
     private javax.swing.JButton btnUpdateBook;
     private javax.swing.JButton btnUpdateLoan;
     private javax.swing.JButton btnUpdateLoan1;
     private javax.swing.JButton btnUpdateLoan2;
+    private javax.swing.JComboBox<String> cboxBookReturn;
+    private javax.swing.JComboBox<String> cboxBooks;
+    private javax.swing.JComboBox<String> cboxReaders;
+    private javax.swing.JTextField inputAuthor;
     private javax.swing.JTextField inputDate;
     private javax.swing.JTextField inputIsbn;
     private javax.swing.JTextField inputSearchBook;
     private javax.swing.JTextField inputSearchLoan;
+    private javax.swing.JTextField inputSearchLoanBook;
+    private javax.swing.JTextField inputSearchReaderBook;
     private javax.swing.JTextField inputTitle;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
@@ -1538,9 +2080,6 @@ public class NewBookView extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1548,7 +2087,6 @@ public class NewBookView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1599,7 +2137,6 @@ public class NewBookView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel48;
-    private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1614,10 +2151,10 @@ public class NewBookView extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JRadioButton radioBtnOutdate;
+    private javax.swing.JRadioButton radioBtnReturned;
     private javax.swing.JTable tblListBook;
-    private javax.swing.JTable tblListBook1;
+    private javax.swing.JTable tblListLoans;
     // End of variables declaration//GEN-END:variables
 }

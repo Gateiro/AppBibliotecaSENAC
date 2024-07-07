@@ -44,7 +44,7 @@ public class LoanController {
                 loan.getLoanReturned());
     }
     
-    public Map getListLoans()
+    public Map listLoan()
     {
         return loanModel.getListLoans();
     }

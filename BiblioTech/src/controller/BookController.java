@@ -36,9 +36,8 @@ public class BookController {
         book.setBookIsRent(bookIsRent);
 
         createBook.addBook(book.getBookId(), book.getIsbnId(), book.getBookTitle(), book.getBookAuthor(), book.getBookDatePublish(), book.getBookIsRent());
-
+        
     }
-
     /**
      * Metodo para listar os livros cadastrados
      * return Map
