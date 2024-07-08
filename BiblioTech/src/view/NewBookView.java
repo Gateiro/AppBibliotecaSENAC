@@ -13,6 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,7 +38,15 @@ public class NewBookView extends javax.swing.JFrame {
     public NewBookView() {
         initComponents();
 
-        modeloTableBook = new DefaultTableModel();
+        // Criação do modelo de tabela personalizado
+        modeloTableBook = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Permitir edição de todas as células, exceto ISBN (coluna 0) e Alugado (coluna 4)
+                return column != 0 && column != 4;
+            }
+        };
+        //modeloTableBook = new DefaultTableModel();
         modeloTableBook.addColumn("ISBN");
         modeloTableBook.addColumn("Título");
         modeloTableBook.addColumn("Autor");
@@ -59,6 +69,44 @@ public class NewBookView extends javax.swing.JFrame {
         modeloTableLoan.addColumn("Data da devolução");
         // Inicializa a jTable1 com o modelo vazio
         tblListLoans.setModel(modeloTableLoan);
+
+        // Adicionando o listener ao modelo de tabela
+        modeloTableBook.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int row = e.getFirstRow();
+                int column = e.getColumn();
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    if (row >= 0 && row <= 4 && column >= 0 && column <= 4) {
+                        Object newValue = modeloTableBook.getValueAt(row, column);
+                        System.out.println("Célula [" + row + "," + column + "] foi atualizada para " + newValue);
+
+                        // Obtendo o ISBN para identificar o livro
+                        int isbn = (int) modeloTableBook.getValueAt(row, 0);
+                        // Identificando a chave a ser atualizada
+                        String key = "";
+                        switch (column) {
+                            case 1:
+                                key = "bookTitle";
+                                break;
+                            case 2:
+                                key = "bookAuthor";
+                                break;
+                            case 3:
+                                key = "bookDatePublish";
+                                break;
+                            case 4:
+                                key = "bookIsRent";
+                                break;
+                        }
+
+                        // Chamando o método editBook para atualizar o valor
+                        bookController.editBook(isbn, key, newValue.toString());
+                    }
+                }
+            }
+        });
+
     }
 
     /**
@@ -734,7 +782,7 @@ public class NewBookView extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(296, Short.MAX_VALUE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastrar Livro", jPanel3);
@@ -1952,6 +2000,7 @@ public class NewBookView extends javax.swing.JFrame {
     }//GEN-LAST:event_radioBtnOutdateActionPerformed
 
     public void listTableBooks() {
+
         // Limpa o modelo atual da tabela
         modeloTableBook.setRowCount(0);
 

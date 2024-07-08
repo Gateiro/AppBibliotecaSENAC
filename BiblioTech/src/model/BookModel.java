@@ -11,26 +11,22 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * 
+ *
  */
 public class BookModel {
-    
+
     private Map<Integer, Map<String, String>> bookMap; // HashMap para armazenar livros
-    
-    
+
     /**
-     * Construtor para iniciar o banco de dados
-     * return void
+     * Construtor para iniciar o banco de dados return void
      */
     public BookModel() {
         this.bookMap = new HashMap<>();
         initializeDatabase(); // Inicializa o bookMap com alguns livros pré-cadastrados
     }
-    
 
     /**
-     * Metodo para popular a base de dados inicial
-     * return void
+     * Metodo para popular a base de dados inicial return void
      */
     private void initializeDatabase() {
         // Cria um novo HashMap para armazenar os detalhes do livro
@@ -54,15 +50,12 @@ public class BookModel {
         bookMap.put(987654321, book2Details);
     }
 
-    
     /**
-     * Metodo para adicionar um livro ao Map
-     * Aplicando regras de négocio
-     * Apenas um código ISBN
-     * return void
+     * Metodo para adicionar um livro ao Map Aplicando regras de négocio Apenas
+     * um código ISBN return void
      */
     public void addBook(int bookId, int bookIsbn, String bookTitle, String bookAuthor, String bookDatePublish, boolean bookIsRent) {
-        
+
         // Verifica se o livro já existe pelo ISBN
         if (!bookMap.containsKey(bookIsbn)) {
             // Cria um novo HashMap para armazenar os detalhes do livro
@@ -80,11 +73,24 @@ public class BookModel {
             JOptionPane.showMessageDialog(null, "Livro já existe");
         }
     }
-    
+
+    public void editBook(int bookIsbn, String key, String newValue) {
+        // Verifica se o livro existe pelo ISBN
+        if (bookMap.containsKey(bookIsbn)) {
+            Map<String, String> bookDetails = bookMap.get(bookIsbn);
+            if (bookDetails.containsKey(key)) {
+                bookDetails.put(key, newValue);
+                JOptionPane.showMessageDialog(null, "Detalhe do livro atualizado com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(null, "Chave não encontrada nos detalhes do livro");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Livro não encontrado");
+        }
+    }
 
     /**
-     * Metodo para Listar livros do Map
-     * return Map
+     * Metodo para Listar livros do Map return Map
      */
     public Map listBook() {
         return bookMap;

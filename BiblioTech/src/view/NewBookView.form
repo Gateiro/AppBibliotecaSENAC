@@ -375,7 +375,7 @@
                               <Component id="jPanel10" max="32767" attributes="0"/>
                               <Component id="jPanel24" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="296" max="32767" attributes="0"/>
+                          <EmptySpace pref="314" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

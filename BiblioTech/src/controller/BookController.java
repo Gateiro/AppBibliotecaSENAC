@@ -24,8 +24,7 @@ public class BookController {
     }
 
     /**
-     * Metodo para adicionar um livro ao Map
-     * return void
+     * Metodo para adicionar um livro ao Map return void
      */
     public void addBook(int bookId, int bookIsbn, String bookTitle, String bookAuthor, String bookDatePublish, boolean bookIsRent) {
         book.setBookId(bookId);
@@ -36,11 +35,15 @@ public class BookController {
         book.setBookIsRent(bookIsRent);
 
         createBook.addBook(book.getBookId(), book.getIsbnId(), book.getBookTitle(), book.getBookAuthor(), book.getBookDatePublish(), book.getBookIsRent());
-        
+
     }
+
+    public void editBook(int bookIsbn, String key, String newValue) {
+        createBook.editBook(bookIsbn, key, newValue);
+    }
+
     /**
-     * Metodo para listar os livros cadastrados
-     * return Map
+     * Metodo para listar os livros cadastrados return Map
      */
     public Map listBook() {
         return createBook.listBook();
