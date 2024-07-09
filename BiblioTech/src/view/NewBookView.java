@@ -6,7 +6,7 @@ package view;
 
 import controller.BookController;
 import controller.LoanController;
-import java.time.Instant;
+import controller.ReaderController;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,12 +25,14 @@ public class NewBookView extends javax.swing.JFrame {
 
     private BookController bookController = new BookController();
     private LoanController loanController = new LoanController();
+    private ReaderController readerController = new ReaderController();
 
     private DefaultTableModel modeloTableBook;
     private DefaultTableModel modeloTableLoan;
 
     private Map<Integer, Map<String, String>> loanMap = loanController.listLoan();
     private Map<Integer, Map<String, String>> bookMap = bookController.listBook();
+    private Map<Integer, Map<String, String>> readerMap = readerController.listReaders();
 
     /**
      * Creates new form NewBookView
@@ -46,6 +48,7 @@ public class NewBookView extends javax.swing.JFrame {
                 return column != 0 && column != 4;
             }
         };
+
         //modeloTableBook = new DefaultTableModel();
         modeloTableBook.addColumn("ISBN");
         modeloTableBook.addColumn("Título");
@@ -70,7 +73,7 @@ public class NewBookView extends javax.swing.JFrame {
         // Inicializa a jTable1 com o modelo vazio
         tblListLoans.setModel(modeloTableLoan);
 
-        // Adicionando o listener ao modelo de tabela
+        // Adicionando o listener ao modelo de tabela para alteração do row
         modeloTableBook.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -1072,6 +1075,11 @@ public class NewBookView extends javax.swing.JFrame {
         jButton9.setText("P");
 
         cboxReaders.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxReaders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxReadersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
         jPanel33.setLayout(jPanel33Layout);
@@ -1680,7 +1688,8 @@ public class NewBookView extends javax.swing.JFrame {
             // Supondo que "readerName" é a chave para o nome do leitor no Map interno
             String readerName = entry.getValue().get("readerName");
             int readerId = entry.getKey();
-            cboxReaders.addItem(readerId + " - " + readerName);
+            String readerCpf = entry.getValue().get("readerId");
+            cboxReaders.addItem(readerCpf + " - " + readerName);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -1738,35 +1747,47 @@ public class NewBookView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchBookLoanActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-
         String selectedBookItem = (String) cboxBooks.getSelectedItem();
-
         String[] parts = selectedBookItem.split(" - ");
         int selectedBookId = Integer.parseInt(parts[0]);
         String selectedBookName = parts[1];
 
-        // Para obter o ID do item selecionado em jComboBox2
+// Para obter o ID do item selecionado em jComboBox2
         String selectedReaderItem = (String) cboxReaders.getSelectedItem();
-
         String[] parts2 = selectedReaderItem.split(" - ");
         int selectedReaderId = Integer.parseInt(parts2[0]);
-
         String selectedReaderName = parts2[1];
+
         if (bookMap.containsKey(selectedBookId)) {
             // Obtém o mapa interno correspondente ao selectedBookId
             Map<String, String> innerMap = bookMap.get(selectedBookId);
 
-            // Verifica se o mapa interno não é nulo (deveria estar presente se a chave externa existe)
+            // Verifica se o mapa interno não é nulo
             if (innerMap != null) {
                 // Verifica o valor de "bookIsRent"
                 String bookIsRentValue = innerMap.get("bookIsRent");
 
-                // Verifica se o campo "bookIsRent" está marcado como true
-                if ("true".equals(bookIsRentValue)) {
-                    JOptionPane.showMessageDialog(null, "Este livro já está emprestado e não pode ser emprestado novamente.");
-                    System.out.println("Este livro já está emprestado e não pode ser emprestado novamente.");
+                // Itera sobre todos os empréstimos associados ao selectedReaderId para verificar se algum ainda está em aberto
+                boolean hasUnreturnedBooks = false;
 
-                    // Aqui você pode decidir como deseja lidar com a situação em que o livro já está emprestado
+                // Verifica se o selectedReaderId possui empréstimos no loanMap
+                for (Map<String, String> loanDetails : loanMap.values()) {
+                    String readerIdStr = loanDetails.get("readerId");
+
+                    // Verifica se o readerId corresponde ao selectedReaderId
+                    if (readerIdStr != null && Integer.parseInt(readerIdStr) == selectedReaderId) {
+                        String dateReturned = loanDetails.get("dateReturned");
+                        System.out.println("Checking loan for reader ID " + selectedReaderId + ": dateReturned = " + dateReturned);
+                        if (dateReturned == null || dateReturned.isEmpty()) {
+                            hasUnreturnedBooks = true;
+                            break;
+                        }
+                    }
+                }
+
+                if ("true".equals(bookIsRentValue) || hasUnreturnedBooks) {
+                    JOptionPane.showMessageDialog(null, "Este livro já está emprestado ou o usuário já possui um livro emprestado.");
+                    System.out.println("Este livro já está emprestado e não pode ser emprestado novamente.");
                 } else {
                     // Atualiza o valor de "bookIsRent" para "true" no mapa interno
                     innerMap.put("bookIsRent", "true");
@@ -1782,14 +1803,10 @@ public class NewBookView extends javax.swing.JFrame {
                 }
             } else {
                 // Caso o mapa interno seja nulo (algo inesperado)
-                // Aqui você pode decidir como lidar com esta situação
             }
         } else {
             // Caso o selectedBookId não esteja presente no bookMap
-            // Aqui você pode decidir como lidar com esta situação
         }
-
-
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnUpdateLoan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateLoan1ActionPerformed
@@ -1804,12 +1821,14 @@ public class NewBookView extends javax.swing.JFrame {
             cboxBooks.addItem(bookId + " - " + bookTitle);
         }
 
-        // Adiciona os itens do readerList ao JComboBox com ID e nome
-        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
-            // Supondo que "readerName" é a chave para o nome do leitor no Map interno
+        // Adiciona os itens do readerList ao JComboBox com ID e nomeaasd
+        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
+            // Supondo que "readerName" é a chave para o nome do leitor no Map internoasda
             String readerName = entry.getValue().get("readerName");
             int readerId = entry.getKey();
-            cboxReaders.addItem(readerId + " - " + readerName);
+            String readerCpf = entry.getValue().get("readerCpf");
+            int readerCpfInt = Integer.parseInt(readerCpf);
+            cboxReaders.addItem(readerCpfInt + " - " + readerName);
         }
     }//GEN-LAST:event_btnUpdateLoan1ActionPerformed
 
@@ -1999,8 +2018,11 @@ public class NewBookView extends javax.swing.JFrame {
         modeloTableLoan.fireTableDataChanged();
     }//GEN-LAST:event_radioBtnOutdateActionPerformed
 
-    public void listTableBooks() {
+    private void cboxReadersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxReadersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxReadersActionPerformed
 
+    public void listTableBooks() {
         // Limpa o modelo atual da tabela
         modeloTableBook.setRowCount(0);
 
@@ -2014,6 +2036,8 @@ public class NewBookView extends javax.swing.JFrame {
             String autor = details.get("bookAuthor");
             String dataPublicacao = details.get("bookDatePublish");
             String isRent = details.get("bookIsRent");
+            // Supondo que a última coluna seja um botão
+
             modeloTableBook.addRow(new Object[]{isbn, titulo, autor, dataPublicacao, isRent});
         }
     }
