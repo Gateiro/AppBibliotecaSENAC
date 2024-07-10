@@ -1,31 +1,38 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
 import controller.ReaderController;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
- * @author Casinha
+ * @author William
  */
-public class NewReaderView extends javax.swing.JPanel {
+public class NewReaderViewE extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTableReaders;
 
     private ReaderController readerController = new ReaderController();
 
     private Map<Integer, Map<String, String>> readerMap = readerController.listReaders();
-
     /**
-     * Creates new form NewReaderView
+     * Creates new form NewReaderViewE
      */
-    public NewReaderView() {
+    public NewReaderViewE() {
         initComponents();
+        modeloTableReaders = new DefaultTableModel();
+        modeloTableReaders.addColumn("Id");
+        modeloTableReaders.addColumn("Nome");
+        modeloTableReaders.addColumn("Cpf");
+        modeloTableReaders.addColumn("Telefone");
+        modeloTableReaders.addColumn("Email");
+        // Inicializa a jTable1 com o modelo vazio
+        tblListReader.setModel(modeloTableReaders);
+        
+        
     }
 
     /**
@@ -56,7 +63,7 @@ public class NewReaderView extends javax.swing.JPanel {
         btnSearchBook = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblListBook = new javax.swing.JTable();
+        tblListReader = new javax.swing.JTable();
         jPanel33 = new javax.swing.JPanel();
         btnUpdateBook = new javax.swing.JButton();
         painelCadLeitor = new javax.swing.JPanel();
@@ -90,7 +97,12 @@ public class NewReaderView extends javax.swing.JPanel {
         btnClearImg = new javax.swing.JButton();
         btnInsertImg = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1600, 750));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         readerView.setBackground(new java.awt.Color(0, 173, 157));
 
@@ -267,7 +279,7 @@ public class NewReaderView extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tblListBook.setModel(new javax.swing.table.DefaultTableModel(
+        tblListReader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -278,7 +290,7 @@ public class NewReaderView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblListBook);
+        jScrollPane1.setViewportView(tblListReader);
 
         jPanel33.setBackground(new java.awt.Color(0, 173, 157));
 
@@ -318,7 +330,7 @@ public class NewReaderView extends javax.swing.JPanel {
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel32, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1212, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 909, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel31Layout.setVerticalGroup(
@@ -706,7 +718,7 @@ public class NewReaderView extends javax.swing.JPanel {
                         .addComponent(btnClearImg, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInsertImg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(309, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -750,7 +762,7 @@ public class NewReaderView extends javax.swing.JPanel {
             .addGroup(readerViewLayout.createSequentialGroup()
                 .addComponent(barraLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abasLeitor)
+                .addComponent(abasLeitor, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
                 .addContainerGap())
         );
         readerViewLayout.setVerticalGroup(
@@ -763,8 +775,8 @@ public class NewReaderView extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(readerView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -773,6 +785,8 @@ public class NewReaderView extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(readerView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void verLeitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verLeitorActionPerformed
@@ -785,37 +799,18 @@ public class NewReaderView extends javax.swing.JPanel {
         abasLeitor.setSelectedIndex(0);
     }//GEN-LAST:event_cadLeitorActionPerformed
 
-    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
-
-    }//GEN-LAST:event_btnUpdateBookActionPerformed
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        new NewBookView(readerMap).setVisible(true);
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void btnSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookActionPerformed
 
     }//GEN-LAST:event_btnSearchBookActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {
-        // TODO add your handling code here:
+    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         listTableReaders();
-    }
-
-    public void listTableReaders() {
-        // Limpa o modelo atual da tabela
-        modeloTableReaders.setRowCount(0);
-
-        // Obtém os dados atualizados do controller
-        //Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
-        // Preenche o modelo com os dados do bookMap
-        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
-            int id = entry.getKey();
-            Map<String, String> details = entry.getValue();
-
-            String titulo = details.get("readerName");
-            String autor = details.get("readerCpf");
-            String dataPublicacao = details.get("readerTel");
-            String isRent = details.get("readerEmail");
-            modeloTableReaders.addRow(new Object[]{id, titulo, autor, dataPublicacao, isRent});
-        }
-    }
+    }//GEN-LAST:event_btnUpdateBookActionPerformed
 
     private void btnCreateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateBookActionPerformed
         // TODO add your handling code here:
@@ -836,11 +831,68 @@ public class NewReaderView extends javax.swing.JPanel {
         readerController.addReader(readerId, readerName, readerCpf, readerTel, readerEmail);
     }//GEN-LAST:event_btnCreateBookActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-         new NewReaderView().setVisible(true);
-    }//GEN-LAST:event_jButton12ActionPerformed
+        listTableReaders();
+        
+    }//GEN-LAST:event_formWindowOpened
 
+        public void listTableReaders() {
+        // Limpa o modelo atual da tabela
+        modeloTableReaders.setRowCount(0);
+
+        // Obtém os dados atualizados do controller
+        //Map<Integer, Map<String, String>> bookReaders = createReader.listReaders();
+        // Preenche o modelo com os dados do bookMap
+        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
+            int id = entry.getKey();
+            Map<String, String> details = entry.getValue();
+
+            String titulo = details.get("readerName");
+            String autor = details.get("readerCpf");
+            String dataPublicacao = details.get("readerTel");
+            String isRent = details.get("readerEmail");
+            modeloTableReaders.addRow(new Object[]{id, titulo, autor, dataPublicacao, isRent});
+        }
+    }
+    
+    
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(NewReaderViewE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(NewReaderViewE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(NewReaderViewE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(NewReaderViewE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new NewReaderViewE().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel abaVerLeitor;
@@ -893,7 +945,7 @@ public class NewReaderView extends javax.swing.JPanel {
     private javax.swing.JPanel menuBotoes;
     private javax.swing.JPanel painelCadLeitor;
     private javax.swing.JPanel readerView;
-    private javax.swing.JTable tblListBook;
+    private javax.swing.JTable tblListReader;
     private javax.swing.JButton verLeitor;
     // End of variables declaration//GEN-END:variables
 }

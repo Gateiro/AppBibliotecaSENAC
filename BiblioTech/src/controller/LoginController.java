@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import model.LoginModel;
 import classes.Person;
 import view.NewBookView;
+import view.NewReaderView;
+import view.NewReaderViewE;
 
 
 /**
@@ -34,7 +36,8 @@ public class LoginController {
 
         // Check credenciais chamando o loginModel
         if (loginModel.checkCredentials(person.getPersonEmail(), person.getPersonPassword())) {
-            new NewBookView().setVisible(true);
+            //new NewBookView().setVisible(true);
+            new NewReaderViewE().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos");
         }

@@ -6,6 +6,7 @@ package controller;
 
 import classes.Person;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import model.ReaderModel;
 
 /**
@@ -23,16 +24,20 @@ public class ReaderController {
     }
 
 
-    public void addReader(int readerId, String readerName, String readerCpf, String readerTel, String readerEmail) {
-        person.setPersonCpf(readerId);
+public void addReader(int readerId, String readerName, String readerCpf, String readerTel, String readerEmail) {
+    try {
+        person.setPersonId(readerId);
         person.setPersonName(readerName);
-        person.setPersonCpf(readerId);
-        person.setPersonTel(readerId);
+        person.setPersonCpf(readerCpf); // Corrigido para usar readerCpf em vez de readerId
+        person.setPersonTel(readerTel); // Corrigido para usar readerTel em vez de readerId
         person.setPersonEmail(readerEmail);
 
         createReader.addReader(readerId, readerName, readerCpf, readerTel, readerEmail);
-
+    } catch (Person.InvalidNameException | Person.InvalidCpfException | Person.InvalidTelException | Person.InvalidEmailException  e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+        // Interromper o processo, se necessário
     }
+}
 
     public Map listReaders() {
         System.out.println("Controller: " + createReader.getListReaders());

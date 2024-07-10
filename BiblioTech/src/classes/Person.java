@@ -16,8 +16,8 @@ public class Person {
 
     private int personId;
     private String personName;
-    private int personCpf;
-    private int personTel;
+    private String personCpf;
+    private String personTel;
     private String personEmail;
     private String personPassword;
     Validation isValid = new Validation();
@@ -62,11 +62,17 @@ public class Person {
      *
      * @param personName o novo nome da pessoa.
      */
-    public void setPersonName(String personName) {
+    public void setPersonName(String personName) throws InvalidNameException {
         if (!isValid.isNotEmpty(personName)) {
-            System.out.println("Nome não deve ser vazio");
+            throw new InvalidNameException("Nome não deve ser vazio");
         }
         this.personName = personName;
+    }
+
+    public class InvalidNameException extends Exception {
+        public InvalidNameException(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -74,7 +80,7 @@ public class Person {
      *
      * @return o CPF da pessoa.
      */
-    public int getPersonCpf() {
+    public String getPersonCpf() {
         return personCpf;
     }
 
@@ -83,8 +89,17 @@ public class Person {
      *
      * @param personCpf o novo CPF da pessoa.
      */
-    public void setPersonCpf(int personCpf) {
+    public void setPersonCpf(String personCpf) throws InvalidCpfException {
+        if (!isValid.isValidCpf(personCpf)) {
+            throw new InvalidCpfException("CPF deve ser válido");
+        }
         this.personCpf = personCpf;
+    }
+
+    public class InvalidCpfException extends Exception {
+        public InvalidCpfException(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -92,7 +107,7 @@ public class Person {
      *
      * @return o telefone da pessoa.
      */
-    public int getPersonTel() {
+    public String getPersonTel() {
         return personTel;
     }
 
@@ -101,8 +116,17 @@ public class Person {
      *
      * @param personTel o novo telefone da pessoa.
      */
-    public void setPersonTel(int personTel) {
+    public void setPersonTel(String personTel) throws InvalidTelException {
+        if (!isValid.isValidTel(personTel)) {
+            throw new InvalidTelException("Telefone deve ser válido");
+        }
         this.personTel = personTel;
+    }
+
+    public class InvalidTelException extends Exception {
+        public InvalidTelException(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -120,17 +144,21 @@ public class Person {
      *
      * @param personEmail o novo email da pessoa.
      */
-    public void setPersonEmail(String personEmail) {
+    public void setPersonEmail(String personEmail) throws InvalidEmailException {
         if (!isValid.isNotEmpty(personEmail)) {
-             JOptionPane.showMessageDialog(null, "Email não deve ser vazio");
-
+            throw new InvalidEmailException("Email não deve ser vazio");
         }
 
         if (!isValid.isValidEmail(personEmail)) {
-            JOptionPane.showMessageDialog(null, "Email deve ser valido");
- 
+            throw new InvalidEmailException("Email deve ser válido");
         }
         this.personEmail = personEmail;
+    }
+
+    public class InvalidEmailException extends Exception {
+        public InvalidEmailException(String message) {
+            super(message);
+        }
     }
 
     /**
@@ -147,10 +175,16 @@ public class Person {
      *
      * @param personPassword a nova senha da pessoa.
      */
-    public void setPersonPassword(String personPassword) {
+    public void setPersonPassword(String personPassword) throws InvalidPasswordException {
         if (!isValid.isNotEmpty(personPassword)) {
-            JOptionPane.showMessageDialog(null, "Senha não deve ser vazia");
+            throw new InvalidPasswordException("Senha não deve ser vazia");
         }
         this.personPassword = personPassword;
+    }
+
+    public class InvalidPasswordException extends Exception {
+        public InvalidPasswordException(String message) {
+            super(message);
+        }
     }
 }

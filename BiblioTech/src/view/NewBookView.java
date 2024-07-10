@@ -34,12 +34,16 @@ public class NewBookView extends javax.swing.JFrame {
     private Map<Integer, Map<String, String>> bookMap = bookController.listBook();
     private Map<Integer, Map<String, String>> readerMap = readerController.listReaders();
 
+    private Map<Integer, Map<String, String>> readerList;
+
     /**
      * Creates new form NewBookView
      */
-    public NewBookView() {
+    public NewBookView(Map<Integer, Map<String, String>> readerMaps) {
         initComponents();
+        System.out.println(readerMaps);
 
+        this.readerList = readerMaps;
         // Criação do modelo de tabela personalizado
         modeloTableBook = new DefaultTableModel() {
             @Override
@@ -1073,6 +1077,11 @@ public class NewBookView extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(255, 169, 13));
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
         jButton9.setText("P");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         cboxReaders.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboxReaders.addActionListener(new java.awt.event.ActionListener() {
@@ -1684,7 +1693,7 @@ public class NewBookView extends javax.swing.JFrame {
         }
 
         // Adiciona os itens do readerList ao JComboBox com ID e nome
-        for (Map.Entry<Integer, Map<String, String>> entry : loanMap.entrySet()) {
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
             // Supondo que "readerName" é a chave para o nome do leitor no Map interno
             String readerName = entry.getValue().get("readerName");
             int readerId = entry.getKey();
@@ -1822,7 +1831,7 @@ public class NewBookView extends javax.swing.JFrame {
         }
 
         // Adiciona os itens do readerList ao JComboBox com ID e nomeaasd
-        for (Map.Entry<Integer, Map<String, String>> entry : readerMap.entrySet()) {
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
             // Supondo que "readerName" é a chave para o nome do leitor no Map internoasda
             String readerName = entry.getValue().get("readerName");
             int readerId = entry.getKey();
@@ -2022,6 +2031,26 @@ public class NewBookView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboxReadersActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        String search = inputSearchReaderBook.getText().toLowerCase();
+
+        // Limpa todos os itens do JComboBox
+        cboxReaders.removeAllItems();
+        //Map<Integer, Map<String, String>> readerMap2 = createReader.listReaders();
+        // Adiciona os itens do bookMap ao JComboBox
+        for (Map.Entry<Integer, Map<String, String>> entry : this.readerList.entrySet()) {
+            // Supondo que "bookTitle" é a chave para o título do livro no Map interno
+            String readerName = entry.getValue().get("readerName").toLowerCase();
+            // Verifica se o título do livro contém o texto de pesquisa
+            if (search.isEmpty() || readerName.contains(search)) {
+                int readerId = entry.getKey();
+                cboxReaders.addItem(readerId + " - " + readerName);
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     public void listTableBooks() {
         // Limpa o modelo atual da tabela
         modeloTableBook.setRowCount(0);
@@ -2145,7 +2174,7 @@ public class NewBookView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewBookView().setVisible(true);
+                //new NewBookView().setVisible(true);
             }
         });
     }
