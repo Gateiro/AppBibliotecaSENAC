@@ -24,7 +24,7 @@ public class LoanController {
 
     }
 
-    public void addLoan(int bookId, int readerId, String bookName, String readerName, String loanDate, String loanRetur, String loanReturned) {
+    public void addLoan(int bookId, int readerId, String bookName, String readerName, String loanDate, String loanRetur, String loanReturned) throws Person.InvalidNameException {
         
         book.setBookId(bookId);
         book.setBookTitle(bookName);

@@ -29,7 +29,7 @@ public class LoginController {
      * @param password Senha digitada pelo usuário.
      * @return void
      */
-    public LoginController(String username, String password) {
+    public LoginController(String username, String password) throws Person.InvalidEmailException, Person.InvalidPasswordException {
 
         person.setPersonEmail(username);
         person.setPersonPassword(password);

@@ -5,8 +5,11 @@
  */
 package view;
 
+import classes.Person;
 import controller.LoginController;
 import java.awt.geom.RoundRectangle2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -400,10 +403,16 @@ public class NewLoginView extends javax.swing.JFrame {
         */
         String passString = String.valueOf(passChar);
 
-        /*
-          * Chama nosso Controller loginController para enviar ao nosso Model
-        */
-        LoginController loginController = new LoginController(inputUsername.getText(), passString);
+        try {
+            /*
+            * Chama nosso Controller loginController para enviar ao nosso Model
+            */
+            LoginController loginController = new LoginController(inputUsername.getText(), passString);
+        } catch (Person.InvalidEmailException ex) {
+            Logger.getLogger(NewLoginView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Person.InvalidPasswordException ex) {
+            Logger.getLogger(NewLoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

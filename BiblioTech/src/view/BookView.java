@@ -4,10 +4,13 @@
  */
 package view;
 
+import classes.Person;
 import controller.BookController;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import controller.LoanController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -1046,8 +1049,12 @@ public class BookView extends javax.swing.JFrame {
                     innerMap.put("bookIsRent", "true");
                     JOptionPane.showMessageDialog(null, "Livro emprestado com sucesso.");
                     System.out.println("Livro emprestado com sucesso.");
-                    createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
-                    // Aqui você pode continuar com a lógica para emprestar o livro
+                    try {
+                        createLoan.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, "25/06/2024", "25/07/2024", "");
+                        // Aqui você pode continuar com a lógica para emprestar o livro
+                    } catch (Person.InvalidNameException ex) {
+                        Logger.getLogger(BookView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 // Caso o mapa interno seja nulo (algo inesperado)

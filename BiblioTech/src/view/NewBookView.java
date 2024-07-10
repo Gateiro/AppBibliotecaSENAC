@@ -4,6 +4,7 @@
  */
 package view;
 
+import classes.Person;
 import controller.BookController;
 import controller.LoanController;
 import controller.ReaderController;
@@ -12,6 +13,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -1697,7 +1700,7 @@ public class NewBookView extends javax.swing.JFrame {
             // Supondo que "readerName" é a chave para o nome do leitor no Map interno
             String readerName = entry.getValue().get("readerName");
             int readerId = entry.getKey();
-            String readerCpf = entry.getValue().get("readerId");
+            String readerCpf = entry.getValue().get("readerCpf");
             cboxReaders.addItem(readerCpf + " - " + readerName);
         }
     }//GEN-LAST:event_formWindowOpened
@@ -1807,8 +1810,12 @@ public class NewBookView extends javax.swing.JFrame {
                     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate todayPlus30Days = today.plusDays(30);
 
-                    loanController.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, today.format(dateFormatter), todayPlus30Days.format(dateFormatter), "");
-                    // Aqui você pode continuar com a lógica para emprestar o livro
+                    try {
+                        loanController.addLoan(selectedBookId, selectedReaderId, selectedBookName, selectedReaderName, today.format(dateFormatter), todayPlus30Days.format(dateFormatter), "");
+                        // Aqui você pode continuar com a lógica para emprestar o livro
+                    } catch (Person.InvalidNameException ex) {
+                        Logger.getLogger(NewBookView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 // Caso o mapa interno seja nulo (algo inesperado)

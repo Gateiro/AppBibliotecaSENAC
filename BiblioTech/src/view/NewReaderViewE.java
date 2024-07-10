@@ -171,7 +171,7 @@ public class NewReaderViewE extends javax.swing.JFrame {
         jButton12.setBackground(new java.awt.Color(0, 173, 157));
         jButton12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Cadastros de Leitores");
+        jButton12.setText("Cadastros de Livros");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton12ActionPerformed(evt);
@@ -762,7 +762,7 @@ public class NewReaderViewE extends javax.swing.JFrame {
             .addGroup(readerViewLayout.createSequentialGroup()
                 .addComponent(barraLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abasLeitor, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
+                .addComponent(abasLeitor, javax.swing.GroupLayout.PREFERRED_SIZE, 927, Short.MAX_VALUE)
                 .addContainerGap())
         );
         readerViewLayout.setVerticalGroup(
