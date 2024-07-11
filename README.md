@@ -1,5 +1,12 @@
 # AppBibliotecaSENAC
  Os documentos presentes neste repositório falaram sobre a criação, planejamento e desenvolvimento do projeto da UC5 do curso Técnico em Desenvolvimento de Sistemas do SENAC Sorocaba. O Objetivo do projeto foi desenvolver um programa de empréstimos de livros.
+ O projeto foi organizado pelos integrantes: 
+ - Matheus Rodrigues Vieira 
+ - William Omar 
+ - Lucas Lima
+ - Bruno Rodrigues
+ - Luiz Ribeiro
+   
  Nosso projeto foi desenvolvido com o intuito de futuramente ser implementado na Ação Comunitária Inhayba, uma ONG presente em Sorocaba que atende crianças e adolescentes do bairro Inhayba em Sorocaba. 
 
 1. Diagrama da arquitetura da informação: https://www.figma.com/design/rYu9opsdZgBVavNtpLJPAE/Projeto-Biblio-UC5?node-id=0-1&t=HQGTfW1Yidk5pzGR-1
