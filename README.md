@@ -1,5 +1,5 @@
 # AppBibliotecaSENAC
- Os documentos presentes neste repositório falaram sobre a criação, planejamento e desenvolvimento do projeto da UC5 do curso Técnico em Desenvolvimento de Sistemas do SENAC Sorocaba. O Objetivo do projeto foi desenvolver um programa de empréstimos de livros.
+ Os documentos presentes neste repositório apresentam a criação, planejamento e desenvolvimento do projeto da UC5 do curso Técnico em Desenvolvimento de Sistemas do SENAC Sorocaba. O Objetivo do projeto foi desenvolver um programa de empréstimos de livros.
  O projeto foi organizado pelos integrantes: 
  - Matheus Rodrigues Vieira 
  - William Omar 
